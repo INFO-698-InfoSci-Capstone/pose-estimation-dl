@@ -1,0 +1,7 @@
+- [DL Pose Estimation Wiki](https://github.com/ua-datalab/DL-pose-estimation/wiki)
+- [Learning to Work in the Cloud: JetStream2 and Reproducibility](https://github.com/ua-datalab/FOSS_AI-ML/wiki/Learning-to-Working-in-the-Cloud:-JetStream2-and-Reproducibility#working-in-the-cloud-jetstream2)
+- [NSF ACCESS](https://github.com/ua-datalab/DL-pose-estimation/wiki/NSF-ACCESS)
+- [CyVerse Dashboard](https://de.cyverse.org/dashboard)
+- [Introduction to Docker Workshop](https://github.com/clizarraga-UAD7/Workshops/wiki/Introduction-to-Docker)
+- [eLife Sciences Reviewed Preprints](https://elifesciences.org/reviewed-preprints/95709v1)
+- [Reproducible Research Wiki](https://github.com/ua-datalab/Reproducible-Research/wiki)
