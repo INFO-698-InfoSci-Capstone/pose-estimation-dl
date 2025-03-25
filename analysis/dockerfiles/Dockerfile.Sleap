@@ -9,6 +9,11 @@ RUN apt-get update && apt-get install -y \
     wget \
     git \
     vim \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Miniconda
@@ -36,24 +41,21 @@ COPY setup.py /home/sleap/
 COPY . /home/sleap/
 RUN chown -R sleap:sleap /home/sleap
 
-# Switch to non-root user
-USER sleap
-
-# Create conda environment
+# Create conda environment (as root)
 RUN conda env create -f environment.yml -n sleap && \
     conda clean -ya
 
 # Setup shell to use conda
 SHELL ["/bin/bash", "-c"]
 
-# Set up the proper LD_LIBRARY_PATH for GPU libraries
+# Set up the proper LD_LIBRARY_PATH for GPU libraries (as root)
 RUN mkdir -p ${CONDA_DIR}/envs/sleap/etc/conda/activate.d && \
     echo '#!/bin/sh' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
     echo 'export SLEAP_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
     echo 'export LD_LIBRARY_PATH=${CONDA_DIR}/envs/sleap/lib:$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
     chmod +x ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh
 
-# Create entrypoint script
+# Create entrypoint script (as root)
 RUN echo '#!/bin/bash' > /home/sleap/entrypoint.sh && \
     echo 'source ${CONDA_DIR}/etc/profile.d/conda.sh' >> /home/sleap/entrypoint.sh && \
     echo 'conda activate sleap' >> /home/sleap/entrypoint.sh && \
