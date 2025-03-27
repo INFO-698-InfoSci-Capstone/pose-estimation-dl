@@ -1,0 +1,123 @@
+# Use kasmweb's preconfigured desktop environment base image
+FROM kasmweb/desktop-deluxe:1.15.0-rolling
+
+# Make sure we're running as root for system installations
+USER root
+
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Fix apt permissions before installing packages
+RUN mkdir -p /var/lib/apt/lists/partial && \
+    chmod 755 /var/lib/apt/lists/partial
+
+# Install additional system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    vim \
+    python3-dev \
+    python3-pip \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Miniconda to /opt/conda
+ENV CONDA_DIR=/opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p ${CONDA_DIR} && \
+    rm /tmp/miniconda.sh
+
+# Add conda to PATH
+ENV PATH=${CONDA_DIR}/bin:$PATH
+
+# Create necessary directories
+RUN mkdir -p /home/kasm-user/sleap-data && \
+    mkdir -p /home/kasm-user/Desktop && \
+    chown -R 1000:1000 /home/kasm-user/sleap-data && \
+    chown -R 1000:1000 /home/kasm-user/Desktop
+
+# Set working directory
+WORKDIR /home/kasm-user/sleap
+
+# Create minimal environment.yml file with required dependencies
+# Use Python 3.7.12 to match SLEAP 1.4.1 requirements
+RUN echo "name: sleap" > /home/kasm-user/sleap/environment.yml && \
+    echo "channels:" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - conda-forge" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - sleap/label/dev" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - sleap" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - nvidia" >> /home/kasm-user/sleap/environment.yml && \
+    echo "dependencies:" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - python=3.7.12" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - sleap=1.4.1" >> /home/kasm-user/sleap/environment.yml && \
+    echo "  - pip" >> /home/kasm-user/sleap/environment.yml
+
+# Create the conda environment - install SLEAP directly from conda
+RUN conda config --add channels conda-forge && \
+    conda config --add channels sleap/label/dev && \
+    conda config --add channels sleap && \
+    conda config --add channels nvidia && \
+    conda env create -f environment.yml -n sleap && \
+    conda clean -ya
+
+# Install Jupyter requirements inside the sleap environment
+RUN /bin/bash -c "source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+    conda activate sleap && \
+    pip install notebook jupyterlab && \
+    pip install jupyter-server-proxy"
+
+# Set up the proper LD_LIBRARY_PATH for GPU libraries
+RUN mkdir -p ${CONDA_DIR}/envs/sleap/etc/conda/activate.d && \
+    echo '#!/bin/sh' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export SLEAP_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export LD_LIBRARY_PATH=${CONDA_DIR}/envs/sleap/lib:$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    chmod +x ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh
+
+# Create start_gui.sh script
+RUN echo '#!/bin/bash' > /home/kasm-user/sleap/start_gui.sh && \
+    echo 'cd /home/kasm-user/sleap-data' >> /home/kasm-user/sleap/start_gui.sh && \
+    echo 'source /opt/conda/etc/profile.d/conda.sh' >> /home/kasm-user/sleap/start_gui.sh && \
+    echo 'conda activate sleap' >> /home/kasm-user/sleap/start_gui.sh && \
+    echo 'jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" &' >> /home/kasm-user/sleap/start_gui.sh && \
+    echo 'echo "Jupyter Lab running at http://localhost:8888"' >> /home/kasm-user/sleap/start_gui.sh && \
+    echo 'sleep infinity' >> /home/kasm-user/sleap/start_gui.sh && \
+    chmod +x /home/kasm-user/sleap/start_gui.sh
+
+# Create desktop shortcuts for SLEAP
+RUN echo "[Desktop Entry]\nVersion=1.0\nName=SLEAP\nComment=SLEAP Animal Pose Tracking\nExec=bash -c 'cd /home/kasm-user/sleap-data && /opt/conda/bin/conda run -n sleap sleap-label'\nTerminal=false\nType=Application\nIcon=utilities-terminal\nCategories=Science;" > /home/kasm-user/Desktop/sleap.desktop && \
+    chmod +x /home/kasm-user/Desktop/sleap.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/sleap.desktop
+
+# Add Jupyter shortcut
+RUN echo "[Desktop Entry]\nVersion=1.0\nName=Jupyter Lab\nComment=Jupyter Lab for SLEAP\nExec=bash -c 'firefox http://localhost:8888'\nTerminal=false\nType=Application\nIcon=firefox\nCategories=Science;" > /home/kasm-user/Desktop/jupyter.desktop && \
+    chmod +x /home/kasm-user/Desktop/jupyter.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/jupyter.desktop
+
+# Make sure dockerstartup directory exists
+RUN mkdir -p /dockerstartup && \
+    touch /dockerstartup/custom_startup.sh && \
+    chmod +x /dockerstartup/custom_startup.sh
+
+# Set up custom startup script
+RUN echo '/home/kasm-user/sleap/start_gui.sh &' >> /dockerstartup/custom_startup.sh
+
+# Expose ports: 6901 for kasmVNC, 8888 for Jupyter Lab
+EXPOSE 6901 8888
+
+# Create volume for data persistence
+VOLUME /home/kasm-user/sleap-data
+
+# Fix permissions for the Mozilla/Firefox directories
+RUN mkdir -p /home/kasm-user/.cache/mozilla && \
+    mkdir -p /home/kasm-user/.config && \
+    chown -R 1000:1000 /home/kasm-user/.cache && \
+    chown -R 1000:1000 /home/kasm-user/.config && \
+    chown -R 1000:1000 /home/kasm-user && \
+    chmod -R 755 /home/kasm-user/.cache
+
+# Switch back to default kasm-user
+USER 1000

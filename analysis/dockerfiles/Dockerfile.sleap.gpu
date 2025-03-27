@@ -1,0 +1,70 @@
+# Use kasmweb's preconfigured desktop environment base image
+FROM kasmweb/desktop-deluxe:1.15.0-rolling
+
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install additional system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    vim \
+    python3-dev \
+    python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Miniconda to /opt/conda
+ENV CONDA_DIR=/opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p ${CONDA_DIR} && \
+    rm /tmp/miniconda.sh
+
+# Add conda to PATH
+ENV PATH=${CONDA_DIR}/bin:$PATH
+
+# Create a non-root user for security
+RUN groupadd -r sleap && useradd -r -g sleap sleap && \
+    mkdir -p /home/sleap && chown -R sleap:sleap /home/sleap
+
+# Set working directory
+WORKDIR /home/sleap
+
+# Copy environment and application files
+COPY environment.yml requirements.txt jupyter_requirements.txt setup.py /home/sleap/
+COPY . /home/sleap/
+RUN chown -R sleap:sleap /home/sleap
+
+# Create the conda environment using the GPU environment file
+RUN conda env create -f environment.yml -n sleap && conda clean -ya
+
+# Install Jupyter requirements inside the sleap environment
+RUN /bin/bash -c "source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+    conda activate sleap && \
+    pip install -r jupyter_requirements.txt && \
+    pip install jupyter-server-proxy"
+
+# Set up the proper LD_LIBRARY_PATH for GPU libraries
+RUN mkdir -p ${CONDA_DIR}/envs/sleap/etc/conda/activate.d && \
+    echo '#!/bin/sh' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export SLEAP_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export LD_LIBRARY_PATH=${CONDA_DIR}/envs/sleap/lib:$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    chmod +x ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh
+
+# Copy the GUI startup script (start_gui.sh must be in the build context)
+COPY start_gui.sh /home/sleap/start_gui.sh
+RUN chmod +x /home/sleap/start_gui.sh
+
+# Expose ports: 6080 for noVNC, 8888 for Jupyter Lab
+EXPOSE 6080 8888
+
+# Create an entrypoint script that activates conda and launches start_gui.sh
+RUN echo '#!/bin/bash' > /home/sleap/entrypoint.sh && \
+    echo 'source ${CONDA_DIR}/etc/profile.d/conda.sh' >> /home/sleap/entrypoint.sh && \
+    echo 'conda activate sleap' >> /home/sleap/entrypoint.sh && \
+    echo 'exec /home/sleap/start_gui.sh' >> /home/sleap/entrypoint.sh && \
+    chmod +x /home/sleap/entrypoint.sh
+
+# Switch to non-root user
+USER sleap
+
+ENTRYPOINT ["/home/sleap/entrypoint.sh"]
