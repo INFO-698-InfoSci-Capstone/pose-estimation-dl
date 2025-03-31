@@ -27,3 +27,24 @@ I would like to be able to install SLEAP and DeepLabCut on my local device, howe
 
 ---
 
+### Date: 
+Week of March 24, 2025
+Date: March 31, 2025
+
+
+### Number of hours:
+15 hours towards creating and modifying the Gantt chart for our project timeline, revising our project proposal based on feedback from our mentor, and the majority of the time being spent on the containerization of the Diplomat and DeepLabCut pose estimation tools. 
+
+
+### Rose:
+The highlight of this week was being able to successfully get a container running for an environment that supplies the use of Diplomat with DeepLabCut as the front-end. I think our proposal is also looking good, and I am happy we were able to get feedback from our mentors to make the necessary revisions that they would like to see.
+
+### Bud:
+After completing the Diplomat-DeepLabCut container and getting it into a state that is ready for user acceptance testing, I am looking forward to working on the Diplomat-SLEAP container. Although there is still some work left to be done on the Diplomat-DeepLabCut container, it has been nice to see the progress that has been made especially considering that the dockerization of these tools was rather daunting when work first began.
+
+### Thorn: 
+A challenge that I am working through is getting Diplomat's GUI to function properly. When running Diplomat on my local machine, I was able to display and use the GUI successfully upon the appropriate prompt in the terminal, however when running Diplomat in the container the GUI does not appear as it should when prompted in the container's terminal. I am working on creating a Kasm Desktop environment and hoping that when using the desktop's terminal the GUI will appear and function successfully.
+
+## Additional thought
+I am hoping the dockerization of these tools is not still giving us significant issues beyond the week of the 31st, I would like to begin user acceptance testing with the stakeholders' videos by the end of the week to feel good about our timeline, but I do feel as though we have the proper guidance and assistance from our mentors to keep us in good shape. 
+---
