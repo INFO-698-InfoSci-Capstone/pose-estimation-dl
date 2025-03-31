@@ -1,3 +1,4 @@
+Following the [Rose/Bud/Thorn model](https://www.panoramaed.com/blog/rose-bud-thorn-activity-and-worksheet#:~:text=%22Rose%2C%20Bud%2C%20Thorn%22%20is%20a%20mindful%20design%2D,day%2C%20week%2C%20or%20month.)
 ### Date:
 Week of March 17, 2025
 
@@ -27,3 +28,23 @@ Still need to finalize project proposal and then flesh out a timeline now that r
 Overall I think this week was productive and we are moving in a good direction, but we need to accelerate in order to hit both our teams learning goals and the stakeholders' needs
 
 ---
+
+### Date:
+Week of March 24, 2025
+
+Log entry on March 30, 2025
+
+### Number of hours:
+15 hours towards research + familiarizing ourselves with the toolset and tech stake, business analysis + requirements gathering meetings with stakeholders, proof of concept for a solution
+
+### Rose:
+Wrapping up our project proposal, have a clear direction for what we need to be doing, timelines, deliverables, lines of communication with stakeholders. It is daunting yet valuable and achievable
+
+### Bud:
+The containers are coming along nicely; For myself, I was working on the sleep one. We got the image to build and the container to run. This is good progress and will be foundational for then getting these tools and workflows into scalable cloud environments for the stakeholders
+
+### Thorn:
+There were a lot of issues with the container, including the base image and how that affects our ability to use the GUI portion of the app we are containerizing. We are working through that but due to the compleixty of the apps, the dockerizing process is taking longer than I would like
+
+### Additional thoughts
+Overall I think the team dynamic is developing nicely, people are settling into roles and tasks, and we have a good direction charted towards our final deliverable. I think going forward we will need to be more concerned with pace than direction or how we distribute work.
