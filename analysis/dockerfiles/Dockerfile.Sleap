@@ -1,0 +1,66 @@
+# Start from nvidia/cuda base image to support GPU
+FROM nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04
+
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    vim \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Miniconda
+ENV CONDA_DIR /opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p ${CONDA_DIR} && \
+    rm ~/miniconda.sh
+
+# Add conda to path
+ENV PATH=$CONDA_DIR/bin:$PATH
+
+# Create a non-root user
+RUN groupadd -r sleap && useradd -r -g sleap sleap
+RUN mkdir -p /home/sleap && chown -R sleap:sleap /home/sleap
+
+# Set working directory
+WORKDIR /home/sleap
+
+# Copy environment files first for better caching
+COPY environment.yml /home/sleap/
+COPY requirements.txt /home/sleap/
+COPY setup.py /home/sleap/
+
+# Copy rest of the application
+COPY . /home/sleap/
+RUN chown -R sleap:sleap /home/sleap
+
+# Create conda environment (as root)
+RUN conda env create -f environment.yml -n sleap && \
+    conda clean -ya
+
+# Setup shell to use conda
+SHELL ["/bin/bash", "-c"]
+
+# Set up the proper LD_LIBRARY_PATH for GPU libraries (as root)
+RUN mkdir -p ${CONDA_DIR}/envs/sleap/etc/conda/activate.d && \
+    echo '#!/bin/sh' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export SLEAP_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export LD_LIBRARY_PATH=${CONDA_DIR}/envs/sleap/lib:$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    chmod +x ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh
+
+# Create entrypoint script (as root)
+RUN echo '#!/bin/bash' > /home/sleap/entrypoint.sh && \
+    echo 'source ${CONDA_DIR}/etc/profile.d/conda.sh' >> /home/sleap/entrypoint.sh && \
+    echo 'conda activate sleap' >> /home/sleap/entrypoint.sh && \
+    echo 'exec "$@"' >> /home/sleap/entrypoint.sh && \
+    chmod +x /home/sleap/entrypoint.sh
+
+ENTRYPOINT ["/home/sleap/entrypoint.sh"]
+CMD ["python", "-c", "import sleap; print(f'SLEAP version {sleap.__version__} initialized successfully')"]

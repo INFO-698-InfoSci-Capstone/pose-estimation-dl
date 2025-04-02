@@ -1,0 +1,21 @@
+# Use ARM-compatible base image
+FROM --platform=linux/arm64 python:3.10-slim
+# Set working directory
+WORKDIR /app
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    make \
+    libhdf5-dev \
+    pkg-config
+# Upgrade pip
+RUN pip install --upgrade pip
+# Install Python dependencies
+RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+RUN pip install tables
+RUN pip install tensorflow==2.19.0
+# Install application (without problematic dependencies)
+RUN pip install deeplabcut
+# Set command
+CMD ["python", "-m", "deeplabcut"]
