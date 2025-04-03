@@ -1,0 +1,124 @@
+# Use kasmweb's preconfigured desktop environment base image
+FROM kasmweb/desktop-deluxe:1.15.0-rolling
+USER root
+
+# Fix the syntax error (remove space after equals sign)
+ENV HOME=/home/kasm-default-profile
+ENV STARTUPDIR=/dockerstartup
+ENV INST_SCRIPTS=$STARTUPDIR/install
+WORKDIR $HOME
+
+###### Customize the container Here ######
+
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install additional system dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    vim \
+    python3-dev \
+    python3-pip \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Miniconda to /opt/conda
+ENV CONDA_DIR=/opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+    /bin/bash /tmp/miniconda.sh -b -p ${CONDA_DIR} && \
+    rm /tmp/miniconda.sh
+ENV PATH=${CONDA_DIR}/bin:$PATH
+
+# Create necessary directories
+RUN mkdir -p /home/kasm-user/sleap-data && \
+    mkdir -p /home/kasm-user/Desktop && \
+    chown -R 1000:1000 /home/kasm-user/sleap-data && \
+    chown -R 1000:1000 /home/kasm-user/Desktop
+
+# Create the conda environment - install SLEAP with conda
+RUN mkdir -p /root/.conda && \
+    conda config --file /root/.condarc --add channels conda-forge && \
+    conda config --file /root/.condarc --add channels nvidia && \
+    conda config --file /root/.condarc --add channels sleap/label/dev && \
+    conda config --file /root/.condarc --add channels sleap && \
+    conda config --file /root/.condarc --add channels anaconda && \
+    conda create -y -n sleap -c conda-forge -c nvidia -c sleap/label/dev -c sleap -c anaconda sleap && \
+    conda clean -ya
+
+# Install Jupyter requirements inside the sleap environment
+RUN /bin/bash -c "source ${CONDA_DIR}/etc/profile.d/conda.sh && \
+    conda activate sleap && \
+    pip install notebook jupyterlab && \
+    pip install jupyter-server-proxy"
+
+# Set up the proper LD_LIBRARY_PATH for GPU libraries
+RUN mkdir -p ${CONDA_DIR}/envs/sleap/etc/conda/activate.d && \
+    echo '#!/bin/sh' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export SLEAP_OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    echo 'export LD_LIBRARY_PATH=${CONDA_DIR}/envs/sleap/lib:$LD_LIBRARY_PATH' >> ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh && \
+    chmod +x ${CONDA_DIR}/envs/sleap/etc/conda/activate.d/sleap_activate.sh
+
+# Create desktop shortcut for SLEAP
+RUN echo "[Desktop Entry]\nVersion=1.0\nName=SLEAP\nComment=SLEAP Animal Pose Tracking\nExec=bash -c 'source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate sleap && cd /home/kasm-user/sleap-data && sleap-label'\nTerminal=false\nType=Application\nIcon=utilities-terminal\nCategories=Science;" > /home/kasm-user/Desktop/sleap.desktop && \
+    chmod +x /home/kasm-user/Desktop/sleap.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/sleap.desktop
+
+# Add Jupyter shortcut
+RUN echo "[Desktop Entry]\nVersion=1.0\nName=Jupyter Lab\nComment=Jupyter Lab for SLEAP\nExec=bash -c 'source ${CONDA_DIR}/etc/profile.d/conda.sh && conda activate sleap && cd /home/kasm-user/sleap-data && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=\"\"'\nTerminal=false\nType=Application\nIcon=firefox\nCategories=Science;" > /home/kasm-user/Desktop/jupyter.desktop && \
+    chmod +x /home/kasm-user/Desktop/jupyter.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/jupyter.desktop
+
+# Create startup script to start jupyter lab automatically
+RUN mkdir -p /dockerstartup && \
+    echo '#!/bin/bash' > /dockerstartup/custom_startup.sh && \
+    echo 'source ${CONDA_DIR}/etc/profile.d/conda.sh' >> /dockerstartup/custom_startup.sh && \
+    echo 'conda activate sleap' >> /dockerstartup/custom_startup.sh && \
+    echo 'cd /home/kasm-user/sleap-data' >> /dockerstartup/custom_startup.sh && \
+    echo 'jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" &' >> /dockerstartup/custom_startup.sh && \
+    chmod +x /dockerstartup/custom_startup.sh && \
+    mkdir -p /etc/kasmvnc && \
+    ln -sf /dockerstartup/custom_startup.sh /etc/kasmvnc/custom_startup.sh
+
+# Create startup script for jupyter
+RUN echo '#!/bin/bash' > /home/kasm-user/start_jupyter.sh && \
+    echo 'source ${CONDA_DIR}/etc/profile.d/conda.sh' >> /home/kasm-user/start_jupyter.sh && \
+    echo 'conda activate sleap' >> /home/kasm-user/start_jupyter.sh && \
+    echo 'cd /home/kasm-user/sleap-data' >> /home/kasm-user/start_jupyter.sh && \
+    echo 'jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token="" &' >> /home/kasm-user/start_jupyter.sh && \
+    chmod +x /home/kasm-user/start_jupyter.sh && \
+    chown 1000:1000 /home/kasm-user/start_jupyter.sh
+
+# Expose port for Jupyter Lab
+EXPOSE 8888 6901
+
+###### End Customize the container Here ######
+
+# Replace the problematic script call with direct permissions
+# Instead of: RUN $STARTUPDIR/set_user_permissions.sh $HOME
+RUN mkdir -p /home/kasm-user/.cache/mozilla && \
+    mkdir -p /home/kasm-user/.cache/sessions && \
+    mkdir -p /home/kasm-user/.cache/dconf && \
+    mkdir -p /home/kasm-user/.config && \
+    mkdir -p /home/kasm-user/.local/share && \
+    chown -R 1000:1000 /home/kasm-user/.cache && \
+    chown -R 1000:1000 /home/kasm-user/.config && \
+    chown -R 1000:1000 /home/kasm-user/.local && \
+    chmod -R 755 /home/kasm-user/.cache && \
+    chmod -R 755 /home/kasm-user/.config && \
+    chmod -R 755 /home/kasm-user/.local
+
+RUN chown 1000:0 $HOME
+ENV HOME=/home/kasm-user
+WORKDIR $HOME
+RUN mkdir -p $HOME && chown -R 1000:0 $HOME
+
+# Add volume for data persistence
+VOLUME /home/kasm-user/sleap-data
+
+USER 1000
+CMD ["--tail-log"]
