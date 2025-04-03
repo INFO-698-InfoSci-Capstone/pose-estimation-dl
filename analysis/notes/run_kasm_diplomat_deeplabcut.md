@@ -13,7 +13,7 @@ docker build -t diplomat-dlc -f Dockerfile.kasm.diplomatdlc .
 Then run
 
 ```
-docker run --name kasm_diplomat -it -p 6901:6901 diplomat-dlc
+docker run --name kasm_diplomat -p 6901:6901 diplomat-dlc
 ```
 
 Then navigate to <https://localhost:6901/>
