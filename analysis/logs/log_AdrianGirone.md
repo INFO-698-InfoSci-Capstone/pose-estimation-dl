@@ -48,3 +48,26 @@ There were a lot of issues with the container, including the base image and how 
 
 ### Additional thoughts
 Overall I think the team dynamic is developing nicely, people are settling into roles and tasks, and we have a good direction charted towards our final deliverable. I think going forward we will need to be more concerned with pace than direction or how we distribute work.
+
+---
+
+### Date:
+Week of March 31, 2025
+
+Log entry on April 7, 2025
+
+### Number of hours:
+25 hours towards research and troubleshooting our SLEAP and Diplomat dockerfiles + builds
+
+### Rose:
+Finished proposal, met with a lot of stakeholders, made some working images with just SLEAP or just DLC. Also pushed some of those working containers to registries so others can pull them.
+
+### Bud:
+Made some good progress settings up SLEAP with Diplomat and GPU enhancement. 
+
+### Thorn:
+Issues with dependencies, environment setups, python version. Diplomat uses a higher version of python than what is offered by installing SLEAP with Conda or Mamba. So we are struggling with having one or multiple environments, one or multiple package managers, and making sure all dependencies and versions thereof behave nicely together
+
+### Additional thoughts
+I think that we can provide immense value to stakeholders with that we have, but the value is exponential if we can get all components of our proposal working nicely together. It is proving harder than anticpated, so there will be definitely be a dash near the end of the project to get everything together for a demo and onboarding for our stakeholders to use the tools we have brought together for them.
+
