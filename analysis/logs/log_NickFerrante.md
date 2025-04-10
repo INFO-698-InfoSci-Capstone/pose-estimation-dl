@@ -48,3 +48,23 @@ A challenge that I am working through is getting Diplomat's GUI to function prop
 ## Additional thought
 I am hoping the dockerization of these tools is not still giving us significant issues beyond the week of the 31st, I would like to begin user acceptance testing with the stakeholders' videos by the end of the week to feel good about our timeline, but I do feel as though we have the proper guidance and assistance from our mentors to keep us in good shape. 
 ---
+
+### Date: 
+Week of March 31, 2025
+Date: April 9, 2025
+
+
+### Number of hours:
+25 hours towards improving and building upon our existing Docker containers, meeting with stakeholders, and meeting with members of the Data Lab for assistance with our containers. 
+
+
+### Rose:
+The highlight of this week was meeting with multiple stakeholders and gaining more in-depth feedback from them, as well as meeting with Michele Cosi and collaborating with him which allowed me to gain more high-level insight into the containers we are creating as well as assistance regarding the problems we are currently facing.
+
+### Bud:
+We are making progress towards getting a SLEAP environment that also has Diplomat installed, and our stakeholders showed enthusiasm after seeing the demo that we walked them through showing how the software can be used to help their research process.
+
+### Thorn: 
+It seems as though one of the biggest issues we face right now is not being able to successfully install SLEAP using Python 3.9 or 3.10 (for Diplomat compatibility) which is becoming a bit frustrating as we continue to troubleshoot to no avail. We have found new people to contact, specifically the developers of Diplomat, so this will be helpful in solving our problem.
+
+---
