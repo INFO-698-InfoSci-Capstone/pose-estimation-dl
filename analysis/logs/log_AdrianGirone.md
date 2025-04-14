@@ -71,3 +71,25 @@ Issues with dependencies, environment setups, python version. Diplomat uses a hi
 ### Additional thoughts
 I think that we can provide immense value to stakeholders with that we have, but the value is exponential if we can get all components of our proposal working nicely together. It is proving harder than anticpated, so there will be definitely be a dash near the end of the project to get everything together for a demo and onboarding for our stakeholders to use the tools we have brought together for them.
 
+---
+
+### Date:
+Week of  April 7, 2025
+
+Log entry on April 13, 2025
+
+### Number of hours:
+25 hours towards research and troubleshooting our SLEAP and Diplomat dockerfiles + builds
+
+### Rose:
+Finally got a functional container with SLEAP and Jupyter, as well as necessary GPU dependencies.
+
+### Bud:
+Have meetings to get the image into cyverse and to work through Dplomat issues
+
+### Thorn:
+Still no luck resolving dependency issues with Diplomat and SLEAP. Either the python versions are misaligned, or dependency versions (for example, Tensorflow, Keras, etc) are misaligned. 
+
+### Additional thoughts
+I want to transition towards software use documentation and model explanations for our users soon; The technical difficulties are far more time consuming than we would have liked
+
