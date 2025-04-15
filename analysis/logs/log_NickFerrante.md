@@ -5,6 +5,7 @@ Following the [Rose/Bud/Thorn](https://www.panoramaed.com/blog/rose-bud-thorn-ac
 
 ### Date: 
 Week of March 17, 2025
+
 Date: March 22, 2025
 
 
@@ -29,6 +30,7 @@ I would like to be able to install SLEAP and DeepLabCut on my local device, howe
 
 ### Date: 
 Week of March 24, 2025
+
 Date: March 31, 2025
 
 
@@ -47,24 +49,25 @@ A challenge that I am working through is getting Diplomat's GUI to function prop
 
 ## Additional thought
 I am hoping the dockerization of these tools is not still giving us significant issues beyond the week of the 31st, I would like to begin user acceptance testing with the stakeholders' videos by the end of the week to feel good about our timeline, but I do feel as though we have the proper guidance and assistance from our mentors to keep us in good shape. 
+
 ---
 
 ### Date: 
-Week of March 31, 2025
-Date: April 9, 2025
+Week of April 7, 2025
+
+Date: April 14, 2025
 
 
 ### Number of hours:
-25 hours towards improving and building upon our existing Docker containers, meeting with stakeholders, and meeting with members of the Data Lab for assistance with our containers. 
-
+25 hours towards getting a better working understanding of DeepLabCut by attempting to perform and analysis with it, along with continued work on containerizing DeepLabCut and Diplomat.
 
 ### Rose:
-The highlight of this week was meeting with multiple stakeholders and gaining more in-depth feedback from them, as well as meeting with Michele Cosi and collaborating with him which allowed me to gain more high-level insight into the containers we are creating as well as assistance regarding the problems we are currently facing.
+The highlight of this week was getting to work with the software itself, up to this point I had been focusing entirely on the containerization of it so I didn’t have a strong understanding of when the stakeholders would talk about the technical use details.
 
 ### Bud:
-We are making progress towards getting a SLEAP environment that also has Diplomat installed, and our stakeholders showed enthusiasm after seeing the demo that we walked them through showing how the software can be used to help their research process.
+We now have working containers for both DeepLabCut and SLEAP, we just need to confirm they work correctly on Jetstream and CyVerse.
 
 ### Thorn: 
-It seems as though one of the biggest issues we face right now is not being able to successfully install SLEAP using Python 3.9 or 3.10 (for Diplomat compatibility) which is becoming a bit frustrating as we continue to troubleshoot to no avail. We have found new people to contact, specifically the developers of Diplomat, so this will be helpful in solving our problem.
+We are still facing significant issues installing Diplomat in the containers, which has resulted at us likely shifting away from Diplomat installation and leaving that for a future group.
 
 ---
