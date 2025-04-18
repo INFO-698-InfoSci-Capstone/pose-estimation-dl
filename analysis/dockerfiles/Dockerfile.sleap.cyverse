@@ -1,0 +1,66 @@
+FROM harbor.cyverse.org/vice/kasm/ubuntu:gpu-20.04-stable
+
+# create ~/data-store for CSI driver fuse mount
+WORKDIR /home/kasm-user/data-store
+
+USER root
+
+# Set correct nvidia environment vars
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
+    wget \
+    git \
+    vim \
+    python3-dev \
+    python3-pip \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender1 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY kasmvnc_defaults.yaml /usr/share/kasmvnc/kasmvnc_defaults.yaml
+COPY vnc_startup.sh /dockerstartup/vnc_startup.sh
+
+# Clean conda and set right privs
+RUN conda clean --all -y
+ARG LOCAL_USER=kasm-user
+RUN chown -R ${LOCAL_USER}:${LOCAL_USER} /home/kasm-user/miniconda3
+
+# Create necessary directories for SLEAP data and desktop shortcuts, set ownership
+RUN mkdir -p /home/kasm-user/sleap-data /home/kasm-user/Desktop && \
+    chown -R 1000:1000 /home/kasm-user/sleap-data /home/kasm-user/Desktop
+
+# Create the conda environment and install SLEAP
+RUN mkdir -p /root/.conda && \
+    conda config --file /root/.condarc --add channels conda-forge && \
+    conda config --file /root/.condarc --add channels nvidia && \
+    conda config --file /root/.condarc --add channels sleap/label/dev && \
+    conda config --file /root/.condarc --add channels sleap && \
+    conda config --file /root/.condarc --add channels anaconda && \
+    conda create -y -n sleap -c conda-forge -c nvidia -c sleap/label/dev -c sleap -c anaconda sleap=1.4.1 && \
+    conda clean -ya
+
+# Set right permissions
+RUN sudo chmod +x /dockerstartup/vnc_startup.sh
+
+#########
+
+ENV CUDA_VISIBLE_DEVICES=0
+
+RUN sudo apt update && sudo apt update
+
+#USER kasm-user
+
+#RUN touch ~/.Xauthority
+
+RUN unset LD_LIBRARY_PATH
+
+# set right permissions
+RUN chmod -R a+rw /home/kasm-user/.cache
+
+ENTRYPOINT [ "/dockerstartup/vnc_startup.sh" ]
