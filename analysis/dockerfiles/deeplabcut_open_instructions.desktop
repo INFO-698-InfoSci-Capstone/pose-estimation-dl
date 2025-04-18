@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Clipboard manager
+Exec=bash -c "subl /home/kasm-user/instructions.md"
+Terminal=false
