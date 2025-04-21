@@ -2,6 +2,9 @@
 FROM kasmweb/desktop-deluxe:1.15.0-rolling
 USER root
 
+LABEL org.opencontainers.image.source="https://github.com/info-698-infosci-capstone/pose-estimation-dl"
+
+
 # Fix the syntax error (remove space after equals sign)
 ENV HOME=/home/kasm-default-profile
 ENV STARTUPDIR=/dockerstartup
