@@ -93,3 +93,24 @@ Still no luck resolving dependency issues with Diplomat and SLEAP. Either the py
 ### Additional thoughts
 I want to transition towards software use documentation and model explanations for our users soon; The technical difficulties are far more time consuming than we would have liked
 
+---
+
+### Date:
+Week of  April 14, 2025
+
+Log entry on April 20, 2025
+
+### Number of hours:
+20 hours towards research and troubleshooting our SLEAP and Diplomat dockerfiles + builds
+
+### Rose:
+Got functional SLEAP and DLC containers running in cyverse
+
+### Bud:
+Working on getting snapshot for functional apps in Jetstream. Working on documentation final product and iShowcase poster
+
+### Thorn:
+Ran into some issues regarding GPU on cyverse; The training training and inference stage takes a while, not confident it is actually utilizing the GPU like we want
+
+
+---
