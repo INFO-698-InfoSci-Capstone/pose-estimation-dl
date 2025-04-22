@@ -6,7 +6,7 @@ Following the [Rose/Bud/Thorn](https://www.panoramaed.com/blog/rose-bud-thorn-ac
 ### Date: 
 Week of March 17, 2025
 
-Date: March 22, 2025
+Date of entry: March 22, 2025
 
 
 ### Number of hours: 
@@ -31,7 +31,7 @@ I would like to be able to install SLEAP and DeepLabCut on my local device, howe
 ### Date: 
 Week of March 24, 2025
 
-Date: March 31, 2025
+Date of entry: March 31, 2025
 
 
 ### Number of hours:
@@ -55,7 +55,7 @@ I am hoping the dockerization of these tools is not still giving us significant 
 ### Date: 
 Week of April 7, 2025
 
-Date: April 14, 2025
+Date of entry: April 14, 2025
 
 
 ### Number of hours:
@@ -69,5 +69,25 @@ We now have working containers for both DeepLabCut and SLEAP, we just need to co
 
 ### Thorn: 
 We are still facing significant issues installing Diplomat in the containers, which has resulted at us likely shifting away from Diplomat installation and leaving that for a future group.
+
+---
+
+### Date: 
+Week of April 14, 2025
+
+Date of entry: April 21, 2025
+
+
+### Number of hours:
+20 hours towards completing the containerization of DeepLabCut and SLEAP on CyVerse, testing their functionality, and beginning the deployment on Jetstream.
+
+### Rose:
+The highlight of this week was getting both containers completely working on CyVerse. It felt good to successfully get the containers deployed on one platform giving us an MVP. After a couple weeks of frustration it seems like we're finally getting to where we want to be, or at least starting to, and having a product that we can show to our stakeholders.
+
+### Bud:
+We have found an approach to the Jetstream deployment (virtual snapshots) that has given us optimism seeing that the original approach was off to a rocky start. Also, after pretty much abandoning Diplomat we have gotten assistance from Isaac Robinson (from Travis Wheeler's lab) and he has informed us he was able to get working containers with DeepLabCut-Diplomat and SLEAP-Diplomat. After making a couple modifications we should be able to deploy these on CyVerse and hopefully Jetstream. 
+
+### Thorn: 
+When going through a demo using SLEAP we ran into some issues which were also experienced by our stakeholders, but our stakeholders were able to resolve this issue so we are hoping to hear back from them to inform them we have working containers on CyVerse and also see how they handled the issues.
 
 ---
