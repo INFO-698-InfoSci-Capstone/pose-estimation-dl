@@ -1,4 +1,4 @@
-# Creating a new Jetstream instance and installing DeepLabCut and SLEAP
+# Installing DeepLabCut and SLEAP into a Jetstream instance
 ## Conda installation
 
 1. Add conda
@@ -17,6 +17,12 @@ sudo chmod 777 miniconda.sh
 
 ```
 ~/miniconda.sh -b -p /home/exouser/miniconda3
+```
+
+5. Add conda to path
+
+```
+export PATH=/home/exouser/miniconda3/bin:$PATH
 ```
 
 4. Initialize conda
@@ -40,7 +46,7 @@ conda init
 7. Install conda dependencies
 
 ```
-conda install -c conda-forge mamba
+conda install -c conda-forge mamba -y
 ```
 
 8. Install nvitop to monitor GPU usage
@@ -56,7 +62,13 @@ pip install nvitop
 vim DEEPLABCUT.yaml
 ```
 
-- Copy the contents from [here](https://github.com/DeepLabCut/DeepLabCut/blob/main/conda-environments/DEEPLABCUT.yaml) into the yaml file
+2. Copy the contents from [here](https://github.com/DeepLabCut/DeepLabCut/blob/main/conda-environments/DEEPLABCUT.yaml) into the yaml file
+    - After doing vim DEEPLABCUT.yaml in the terminal, perform the following steps:
+        1. Copy the raw yaml file from the link
+        2. In the Jetstream instance's terminal, press ```i``` to enter INSERT mode
+        3. Paste the contents into the file
+        4. Press ```esc```
+        5. Type ```:wq``` and press ```enter``` to save and exit the file
 
 2. Create the DeepLabCut environment
 
@@ -73,6 +85,9 @@ conda create -y -n sleap -c conda-forge -c nvidia -c sleap/label/dev -c sleap -c
 ```
 
 ## Test the installations were successful
+
+Navigate to the Jetstream instance's Web Desktop, open a terminal, and perform the following steps:
+
 ### DeepLabCut
 
 1. Activate the DeepLabCut environment
