@@ -1,0 +1,19 @@
+services:
+  desktop:
+    build: .
+    ports: 
+      - "6901:6901"
+    environment:
+      - VNC_PW=${VNC_PW}
+    volumes:
+      - type: bind
+        source: ./dlc-data
+        target: /home/kasm-user/dlc-data
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
