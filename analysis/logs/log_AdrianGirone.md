@@ -110,7 +110,27 @@ Got functional SLEAP and DLC containers running in cyverse
 Working on getting snapshot for functional apps in Jetstream. Working on documentation final product and iShowcase poster
 
 ### Thorn:
-Ran into some issues regarding GPU on cyverse; The training training and inference stage takes a while, not confident it is actually utilizing the GPU like we want
+Ran into some issues regarding GPU on cyverse; The training and inference stage takes a while, not confident it is actually utilizing the GPU like we want
+
+
+---
+
+### Date:
+Week of  April 21, 2025
+
+Log entry on April 27, 2025
+
+### Number of hours:
+20 hours towards meetings, writing documentation, working on poster, working through technical issues
+
+### Rose:
+Poster nearly done, documentation nearly done. Tool verified working in both cyverse and jetstream
+
+### Bud:
+Have some meetings to get some end user feedback; Have the opportunity to get one more "nice to have" into the tool with diplomat
+
+### Thorn:
+Still some issues regarding GPU on Cyverse; We can do the training of single videos we believe with SLEAP, however when we try to do a batch predict, it seems like on Cyverse we don't have enough RAM. We get farther into the training (Later Epoch) on jetstream, so we need to reach out to our Cyverse contact to ensure we have the proper resource allocation for every instance of our tool launching. 
 
 
 ---
