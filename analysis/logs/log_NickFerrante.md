@@ -91,3 +91,23 @@ We have found an approach to the Jetstream deployment (virtual snapshots) that h
 When going through a demo using SLEAP we ran into some issues which were also experienced by our stakeholders, but our stakeholders were able to resolve this issue so we are hoping to hear back from them to inform them we have working containers on CyVerse and also see how they handled the issues.
 
 ---
+
+### Date: 
+Week of April 21, 2025
+
+Date of entry: April 27, 2025
+
+
+### Number of hours:
+20 hours towards creating video demos highlighting the ease of access our apps provide to SLEAP and DeepLabCut as well as a full DeepLabCut analysis walk through. Worked on conducting a full SLEAP analysis and troubleshooting technical issues that arose during this process, and also attended the poster presentations of students who used SLEAP from Martha Bhattacharya’s course. I was able to consult with these students and discuss their process, the issues they faced using SLEAP, and the improvements they would like to see to enhance their analyses.
+
+### Rose:
+The highlight of this week was getting to actually test the functionality of our tools/apps, up till now we had been stuck on the construction of them and unable to conduct any deployment testing. 
+
+### Bud:
+One of our stakeholders has invited us to join their lab session this coming week to have the students test our tools. This will be very useful in getting feedback directly from the end users.
+
+### Thorn: 
+When trying to go through a full SLEAP analysis on CyVerse we ran into a lot of issues, some of which seemed to be caused by SLEAP and others caused by CyVerse. We were able to get a little future in the analysis when using Jetstream, however we still faced an issue and were not able to complete the analysis so I am hoping by going to the lab with the students this week they will be able to use their experience with SLEAP to resolve the issues we faced.
+
+---
