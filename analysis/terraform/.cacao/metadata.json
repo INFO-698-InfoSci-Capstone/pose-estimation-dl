@@ -1,0 +1,193 @@
+{
+  "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/metadata-schemas/v3/schema.json",
+  "schema_version": "3",
+  "name": "vms 4 workshop",
+  "author": "Edwin Skidmore",
+  "author_email": "edwin@cyverse.org",
+  "description": "launch instances for a workshop",
+  "template_type": "openstack_terraform",
+  "purpose": "openstack_compute",
+  "cacao_pre_tasks": [],
+  "cacao_post_tasks": [
+    {
+      "type": "ansible",
+      "location": "cacao_atmosphere_legacy"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "flavor",
+      "type": "cacao_provider_flavor",
+      "description": "Instance type"
+    },
+    {
+      "name": "image",
+      "type": "cacao_provider_image",
+      "default": "",
+      "description": "Boot image"
+    },
+    {
+      "name": "image_name",
+      "type": "cacao_provider_image_name",
+      "default": "",
+      "description": "Boot image name"
+    },
+    {
+      "name": "ip_pool",
+      "type": "cacao_provider_external_network",
+      "default": "external_network_name",
+      "description": "IP pool"
+    },
+    {
+      "name": "keypair",
+      "type": "cacao_provider_key_pair",
+      "default": "cacao-ssh-key",
+      "description": "Key-pair for instance access"
+    },
+    {
+      "name": "project",
+      "type": "cacao_provider_project",
+      "description": "OpenStack Project ID"
+    },
+    {
+      "name": "region",
+      "type": "cacao_provider_region",
+      "default": "IU",
+      "description": "Openstack region"
+    },
+    {
+      "name": "user_data",
+      "type": "cacao_cloud_init",
+      "description": "cloud init script"
+    },
+    {
+      "name": "username",
+      "type": "cacao_username",
+      "default": "username",
+      "description": "CACAO username"
+    },
+    {
+      "name": "csv_email",
+      "type": "string",
+      "default": "",
+      "description": "The email address to send csv, if set"
+    },
+    {
+      "name": "instance_instructor_count",
+      "type": "integer",
+      "default": 1,
+      "description": "# of instructor instances"
+    },
+    {
+      "name": "instance_name",
+      "type": "string",
+      "description": "Instance name"
+    },
+    {
+      "name": "instructor_username",
+      "type": "string",
+      "default": "instructor",
+      "description": "username of instructor account that will be setup on all instructor instances"
+    },
+    {
+      "name": "instructors_ssh_keys_base64",
+      "type": "string",
+      "default": "",
+      "description": "csv of base64-encoded public ssh keys, deposited on ever root account for every vm"
+    },
+    {
+      "name": "min_instances",
+      "type": "integer",
+      "default": 1,
+      "description": "minumum number of students instances to provision, regardless of student list"
+    },
+    {
+      "name": "power_state",
+      "type": "string",
+      "default": "active",
+      "description": "Power state",
+      "enum": [
+        "active",
+        "shutoff",
+        "suspend",
+        "shelved_offloaded"
+      ]
+    },
+    {
+      "name": "root_storage_delete_on_termination",
+      "type": "bool",
+      "default": true,
+      "description": "if true, will delete the root storage when instance is deleted"
+    },
+    {
+      "name": "root_storage_size",
+      "type": "integer",
+      "default": -1,
+      "description": "Size of root storage in GB"
+    },
+    {
+      "name": "root_storage_source",
+      "type": "string",
+      "default": "image",
+      "description": "Source of root disk; currently, only image is supported ",
+      "enum": [
+        "image"
+      ]
+    },
+    {
+      "name": "root_storage_type",
+      "type": "string",
+      "default": "local",
+      "description": "type of root storage, either local or volume",
+      "enum": [
+        "local",
+        "volume"
+      ]
+    },
+    {
+      "name": "share_access_key",
+      "type": "string",
+      "default": "",
+      "description": "share access key"
+    },
+    {
+      "name": "share_access_level",
+      "type": "string",
+      "default": "rw",
+      "description": "Share access level, which was originally set upon creation",
+      "enum": [
+        "rw",
+        "ro"
+      ]
+    },
+    {
+      "name": "share_access_to",
+      "type": "string",
+      "default": "",
+      "description": "The name of the access_to field of share access; if not set, will default to ${share_name}_access_${share_access_level}"
+    },
+    {
+      "name": "share_mount_path",
+      "type": "string",
+      "default": "/mnt/class_data",
+      "description": "mount path of share"
+    },
+    {
+      "name": "share_name",
+      "type": "string",
+      "default": "",
+      "description": "name of share"
+    },
+    {
+      "name": "student_usernames",
+      "type": "string",
+      "description": "comma-separated string of student usernames"
+    },
+    {
+      "name": "students_per_instance",
+      "type": "integer",
+      "default": 1,
+      "description": "number of students to assign per instance"
+    }
+  ]
+}

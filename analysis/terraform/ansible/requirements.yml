@@ -1,0 +1,6 @@
+roles: 
+- src: cyverse-ansible.ansible_vnc_setup
+
+collections:
+- community.general
+- ansible.posix
