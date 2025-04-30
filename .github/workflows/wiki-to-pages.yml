@@ -1,0 +1,30 @@
+name: Deploy Wiki to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Clone Wiki
+      run: |
+        git clone https://github.com/INFO-698-InfoSci-Capstone/pose-estimation-dl.wiki.git wiki
+        ls wiki
+
+    - name: Copy Wiki Content
+      run: |
+        mkdir -p temp-docs
+        cp -r wiki/* temp-docs/
+
+    - name: Deploy to Pages Repo
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./temp-docs
+        external_repository: INFO-698-InfoSci-Capstone/fasttrack.github.io
+        publish_branch: gh-pages
