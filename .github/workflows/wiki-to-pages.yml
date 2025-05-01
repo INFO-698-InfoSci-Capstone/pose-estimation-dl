@@ -24,7 +24,7 @@ jobs:
     - name: Deploy to Pages Repo
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.PERSONAL_TOKEN }}
+        personal_token: ${{ secrets.PERSONAL_TOKEN }}
         publish_dir: ./temp-docs
         external_repository: INFO-698-InfoSci-Capstone/fasttrack.github.io
         publish_branch: gh-pages
