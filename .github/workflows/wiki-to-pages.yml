@@ -1,5 +1,6 @@
 name: Deploy Wiki to GitHub Pages
 
+# trigger manually
 on:
   workflow_dispatch:
 
@@ -8,23 +9,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      - name: Checkout this repo
+        uses: actions/checkout@v4
 
-    - name: Clone Wiki
-      run: |
-        git clone https://github.com/INFO-698-InfoSci-Capstone/pose-estimation-dl.wiki.git wiki
-        ls wiki
+      - name: Clone Wiki
+        run: |
+          git clone https://github.com/INFO-698-InfoSci-Capstone/pose-estimation-dl.wiki.git wiki
 
-    - name: Copy Wiki Content
-      run: |
-        mkdir -p temp-docs
-        cp -r wiki/* temp-docs/
+      - name: Copy Wiki Content
+        run: |
+          rm -rf temp-docs
+          mkdir temp-docs
+          cp -r wiki/* temp-docs/
 
-    - name: Deploy to Pages Repo
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        publish_dir: ./temp-docs
-        external_repository: INFO-698-InfoSci-Capstone/fasttrack.github.io
-        publish_branch: gh-pages
+      - name: Deploy to Pages Repo
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # 🔑 Use your PAT here, not the GITHUB_TOKEN
+          personal_token: ${{ secrets.PERSONAL_TOKEN }}
+          external_repository: INFO-698-InfoSci-Capstone/fasttrack.github.io
+          publish_branch: gh-pages
+          publish_dir: ./temp-docs
+          # optional:
+          keep_files: false
+          allow_empty_commit: false
