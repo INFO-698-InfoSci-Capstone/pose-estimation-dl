@@ -21,6 +21,7 @@ jobs:
           rm -rf temp-docs
           mkdir temp-docs
           cp -r wiki/* temp-docs/
+          cp temp-docs/Home.md temp-docs/index.md     # <-- add this line
 
       - name: Deploy to Pages Repo
         uses: peaceiris/actions-gh-pages@v3
