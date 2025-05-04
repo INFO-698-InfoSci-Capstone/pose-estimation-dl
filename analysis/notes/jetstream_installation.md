@@ -63,8 +63,8 @@ pip install nvitop
 sudo apt update
 sudo apt install filezilla -y
 ```
-- Confirm installation with ```filezilla &```
-- Drag it's desktop icon into the pinned apps on the dock
+ - Confirm installation with ```filezilla &```
+ - Drag it's desktop icon into the pinned apps on the dock
 
 ## Create Desktop shortcuts for SLEAP and DeepLabCut
 
