@@ -135,7 +135,7 @@ chmod +x ~/.local/share/applications/sleap.desktop
 
 ### DeepLabCut Desktop shortcut
 
-1. Download the DeepLabCut icon from https://sleap.ai/installation.html
+1. Download the DeepLabCut icon from https://deeplabcut.github.io/DeepLabCut/docs/installation.html
     - Open the side menu on the left and download the image
     - Save the image as deeplabcutIcon.png
 
