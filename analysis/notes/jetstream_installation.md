@@ -198,7 +198,7 @@ chmod +x ~/.local/share/applications/deeplabcut.desktop
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
 
-9. Drag the SLEAP icon into the dock
+9. Drag the DeepLabCut icon into the dock
 
 ## [Installing DeepLabCut](https://deeplabcut.github.io/DeepLabCut/docs/installation.html)
 1. Create a yaml file for DeepLabCut’s environment creation
