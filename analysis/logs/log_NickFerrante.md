@@ -111,3 +111,23 @@ One of our stakeholders has invited us to join their lab session this coming wee
 When trying to go through a full SLEAP analysis on CyVerse we ran into a lot of issues, some of which seemed to be caused by SLEAP and others caused by CyVerse. We were able to get a little future in the analysis when using Jetstream, however we still faced an issue and were not able to complete the analysis so I am hoping by going to the lab with the students this week they will be able to use their experience with SLEAP to resolve the issues we faced.
 
 ---
+
+### Date: 
+Week of April 28, 2025
+
+Date of entry: May 5, 2025
+
+
+### Number of hours:
+15 hours towards meeting with students and stakeholders to get end-user feedback, troubleshooting app configuration issues in CyVerse, and adding desktop shortcuts to our CyVerse and Jetstream apps/images.
+
+### Rose:
+The highlight of this week was being able to get direct feedback from end-users. We met with one of the students who was able to walk through the entire analysis process using our CyVerse DeepLabCut app, and I was also able to go to one of the undergraduate student lab sessions to get feedback there as well. 
+
+### Bud:
+We are very close to the end now and just putting the finishing touches on our product.
+
+### Thorn: 
+We are facing an issue when trying to add desktop shortcuts to our CyVerse apps because modifications were made to the base image that we originally used to construct our container. Because of this, when I went to build another image with additional features CyVerse was unable to pull the newly built image from Docker Hub. I am working with Michele to resolve this and hopefully we will be able to put these final touches on our product in the next couple days.
+
+---
