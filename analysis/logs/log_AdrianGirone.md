@@ -132,5 +132,25 @@ Have some meetings to get some end user feedback; Have the opportunity to get on
 ### Thorn:
 Still some issues regarding GPU on Cyverse; We can do the training of single videos we believe with SLEAP, however when we try to do a batch predict, it seems like on Cyverse we don't have enough RAM. We get farther into the training (Later Epoch) on jetstream, so we need to reach out to our Cyverse contact to ensure we have the proper resource allocation for every instance of our tool launching. 
 
+---
+
+### Date:
+Week of  April 28, 2025
+
+Log entry on May 5, 2025
+
+### Number of hours:
+15 hours towards meetings, writing documentation, working on poster, working through technical issues
+
+### Rose:
+Poster done, documentation nearly done. App functionality nearly complete (all tools users need installed). Turned in a lot of auxillary things (e.g., team eval)
+
+### Bud:
+Working towards a solution with cacaco, terraform, and being able to let students launch workflows in jetstream with little to no setup on their end. 
+Also making sure we can get model output into usable format for end users.
+
+### Thorn:
+Still some issues regarding GPU on Cyverse; We determined that we might not have enough RAM or vRAM to do SLEAP analysis , even after we manually upped our resources. We are trying a different version of SLEAP to see if that can't yield a full analysis with our resource specs, otherwise we might just write off SLEAP as incompatible with cyverse resource config. 
+
 
 ---
