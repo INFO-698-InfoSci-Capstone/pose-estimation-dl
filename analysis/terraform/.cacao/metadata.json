@@ -27,12 +27,6 @@
       "description": "Boot image"
     },
     {
-      "name": "image_name",
-      "type": "cacao_provider_image_name",
-      "default": "",
-      "description": "Boot image name"
-    },
-    {
       "name": "ip_pool",
       "type": "cacao_provider_external_network",
       "default": "external_network_name",
