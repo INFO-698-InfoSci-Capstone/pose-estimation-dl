@@ -1,0 +1,30 @@
+---
+# Design note: These tasks are included from main.yml because it allows us to use 'with_items' on more than one task.
+
+- name: SET_FACT; setting outer_item to be the potential remote user {{ item }}
+  ansible.builtin.set_fact:
+    outer_item: "{{ item }}"
+
+- name: BLOCK; to find local user
+  block:
+    - name: LOCAL_ACTION; Test connection to instance using username {{ outer_item }}
+      local_action: >
+        command ssh -o BatchMode=yes -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null {{ outer_item }}@{{ ansible_host }} echo "Cacao is cool!"
+      failed_when: false
+      register: connection
+
+    - name: DEBUG; debug variable
+      debug:
+        msg: "{{ connection }}"
+
+    - name: SET_FACT; Set remote_user to {{ outer_item }} if connection successful
+      ansible.builtin.set_fact: remote_user="{{ outer_item }}"
+      when: '"Cacao is cool!" in connection.stdout'
+  when: remote_user is not defined
+  ignore_errors: yes
+  run_once: true
+  delegate_to: "{{ groups['all'][0] }}"
+
+- name: SET_FACT; Set ansible_user to {{ outer_item }} if remote_user if set
+  ansible.builtin.set_fact: ansible_user="{{ remote_user }}"
+  when: remote_user is defined

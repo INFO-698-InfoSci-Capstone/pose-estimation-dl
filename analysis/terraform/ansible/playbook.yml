@@ -1,0 +1,272 @@
+- name: PLAY; connectivity and finding the user
+  hosts: all
+  gather_facts: false
+  tags: find_user
+  become: false
+  any_errors_fatal: true
+  tasks:
+  - name: SET_FACT; set python interpreter
+    ansible.builtin.set_fact: ansible_python_interpreter="/usr/bin/python3"
+
+  - name: WAIT_FOR; Wait for ssh to be avaliable and connect
+    ansible.builtin.wait_for:
+      port: 22
+      host: "{{ ( ansible_ssh_host | default(ansible_host)) | default(inventory_hostname) }}"
+      search_regex: OpenSSH
+      delay: 10
+      timeout: 600
+    connection: local
+
+  # wait for 1 minute after establishing a connection
+  - name: PAUSE; because Jetstream 2 networking
+    ansible.builtin.pause:
+      minutes: 1
+
+  - ansible.builtin.include_tasks: 'find_connection.yml'
+    loop: "{{ CONNECTION_USERNAMES }}"
+
+  - name: FAIL; report failure if ansible_user not found
+    ansible.builtin.fail:
+      msg: "?Could not find a valid ansible_user for subsequent ssh connections; exiting playbook."
+    when: ansible_user is not defined
+
+- name: PLAY; setup ssh and users
+  hosts: all
+  gather_facts: false
+  become: true
+  tags: ssh
+  vars:
+    SSHD_CHANGES:
+      - regexp: '^PermitRootLogin'
+        line: 'PermitRootLogin prohibit-password'
+        state: 'present'
+
+      - regexp: '^UseDNS'
+        line: 'UseDNS no'
+        state: 'present'
+
+      - regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication yes'
+        state: 'present'
+
+  pre_tasks:
+  - name: WAIT_FOR_CONNECTION; poll every 10s for a max of 10m
+    ansible.builtin.wait_for_connection:
+      sleep: 10
+      timeout: 600
+
+  - name: SHELL; shell connection test
+    ansible.builtin.shell: echo "hello"
+    retries: 30
+    delay: 5
+    vars:
+      ansible_ssh_pipelining: no
+
+  - name: LINEINFILE; remove 'Defaults requiretty', if it exists
+    ansible.builtin.lineinfile:
+      dest: /etc/sudoers
+      line: 'Defaults requiretty'
+      state: absent
+    vars:
+        ansible_ssh_pipelining: no
+
+  - name: GATHER_FACTS
+    ansible.builtin.gather_facts:
+
+  tasks:
+  - block:
+    - name: USER; add students for ubuntu
+      ansible.builtin.user:
+        name: "{{ item.key }}"
+        shell: "/bin/bash"
+        append: yes
+        groups:
+          - "sudo"
+          - "docker"
+        password: "{{ item.value.password | password_hash('sha512') }}"
+      loop: "{{ students| dict2items }}"
+      when: ansible_distribution == "Ubuntu"
+
+    - name: USER; add students for rocky or almalinux
+      ansible.builtin.user:
+        name: "{{ item.key }}"
+        shell: "/bin/bash"
+        append: yes
+        groups:
+          - "wheel"
+          - "docker"
+        password: "{{ item.value.password | password_hash('sha512') }}"
+      loop: "{{ students| dict2items }}"
+      when: ansible_distribution == "Rocky" or ansible_distribution == "AlmaLinux"
+
+    - name: LINEINFILE; make changes to /etc/ssh/sshd_config
+      ansible.builtin.lineinfile:
+        dest: /etc/ssh/sshd_config
+        backup: true
+        regexp: "{{ item.regexp }}"
+        line: "{{ item.line }}"
+        state: "{{ item.state }}"
+      loop: "{{ SSHD_CHANGES }}"
+      register: sshd_config
+
+    - name: FILE; create /etc/ssh/sshd_config.d directory
+      ansible.builtin.file:
+        path: /etc/ssh/sshd_config.d
+        state: directory
+        mode: "0755"
+        owner: root
+
+    - name: COPY; copy a file to /etc/ssh/sshd_config.d/65-cacao.conf
+      ansible.builtin.copy:
+        dest: "/etc/ssh/sshd_config.d/65-cacao.conf"
+        content: |
+            Match Group docker
+            PasswordAuthentication yes
+            Match all
+        mode: "0755"
+        owner: root
+        backup: no
+
+    - name: SYSTEMD; restart ssh
+      ansible.builtin.systemd:
+        name: ssh
+        state: restarted
+      when: sshd_config.changed and (ansible_distribution == "Ubuntu")
+
+    - name: SYSTEMD; restart sshd
+      ansible.builtin.systemd:
+        name: sshd
+        state: restarted
+      when: sshd_config.changed and (ansible_distribution == "Rocky" or ansible_distribution == "AlmaLinux")
+    when: students is defined and students|length > 0
+
+  - name: LINEINFILE; update /etc/sudoers to be no passwd
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers
+      backup: true
+      regexp: '^%sudo'
+      line: '%sudo ALL=(ALL:ALL) NOPASSWD: ALL'
+
+  - name: LINEINFILE; add additional instructors to the root account
+    ansible.builtin.lineinfile:
+      dest: /root/.ssh/authorized_keys
+      line: "{{ item | b64decode }}"
+      state: "present"
+    loop: "{{ instructors_ssh_keys_base64 }}"
+    when: instructors_ssh_keys_base64 is defined
+
+# This should eventually be moved out into an ansible role
+# Just add to all hosts jic
+- name: PLAY; setup manila share and vnc for all users
+  hosts: all
+  tags: manilashare_vncsetup
+  become: true
+  tasks:
+  - block:
+    - name: COPY; create the manila secret /etc/ceph.{{ SHARE_ACCESS_TO }}.secret
+      ansible.builtin.copy:
+        dest: "/etc/ceph.{{ SHARE_ACCESS_TO }}.secret"
+        content: |
+          {{ SHARE_ACCESS_KEY }}
+        mode: "0600"
+        backup: yes
+
+    # TODO: for now ignore_errors true since there could be an error if the entire deployment failed and something might be occupying the mount
+    - name: MOUNT; mount the MANILA_MOUNT
+      ansible.posix.mount:
+        src: "{{ SHARE_EXPORT_PATH}}"
+        path: "{{ SHARE_MOUNT_PATH }}"
+        fstype: "ceph"
+        opts: "name={{ SHARE_ACCESS_TO }},secretfile=/etc/ceph.{{ SHARE_ACCESS_TO }}.secret,,x-systemd.device-timeout=30,x-systemd.mount-timeout=30,noatime,_netdev,rw"
+        passno: "2"
+        backup: yes
+        state: mounted
+      ignore_errors: true
+
+    - name: FILE; ensure {{ SHARE_MOUNT_PATH }} has all permissions
+      ansible.builtin.file:
+        path: "{{ SHARE_MOUNT_PATH }}"
+        state: directory
+        mode: "0777"
+    when: SHARE_ENABLE is defined and SHARE_ENABLE|bool
+
+# - name: PLAY; setup vnc for all users
+#   hosts: all
+#   become: true
+#   tags: vnc
+#   tasks:
+  - name: BLOCK; to setup vnc users
+    block:
+    - name: SET_FACT; set the VNC_USERS
+      ansible.builtin.set_fact:
+        VNC_USERS: "{{ students }}"
+      when: students is defined and VNC_USERS is not defined
+
+    - name: IMPORT_ROLE; call ansible_vnc_setup role
+      ansible.builtin.import_role:
+        name: cyverse-ansible.ansible_vnc_setup
+
+    - name: SET_FACT; setting vm4workshop_users to students
+      ansible.builtin.set_fact:
+        vm4workshop_users: "{{ students }}"
+      when: students is defined
+
+    - name: SET_FACT; setting vm4workshop_users to VNC_USERS
+      ansible.builtin.set_fact:
+        vm4workshop_users: "{{ VNC_USERS }}"
+      when: VNC_USERS is defined
+
+    - name: GETENT; check if user exists
+      ansible.builtin.getent:
+        database: passwd
+        fail_key: false
+
+    - name: FILE; create the .ssh directory if it doesn't exist
+      ansible.builtin.file:
+        path: "/home/{{ item.key }}/.ssh"
+        state: directory
+        mode: "0755"
+        owner: "{{ item.key }}"
+        group: "{{ item.key }}"
+      loop: "{{ vm4workshop_users | dict2items }}"
+      when: ansible_facts.getent_passwd[item.key] is defined
+
+    - name: COPY; create the rc file that will be the user's motd
+      ansible.builtin.copy:
+        dest: "/home/{{ item.key }}/.ssh/rc"
+        content: |
+          #!/bin/bash
+
+          echo
+          echo "Your vnc session:"
+          echo "   display :{{ item.value.display_number }}"
+          echo "   port:   590{{ item.value.display_number }}"
+          echo
+          echo "You can use ssh forwarding to access your desktop. If you're using a command line ssh, an example command is:"
+          echo
+          echo "   ssh -L 590{{ item.value.display_number }}:localhost:590{{ item.value.display_number }} {{ item.key }}@{{ ansible_host }}"
+          echo
+          echo "Then you can use a vnc viewer to connect to your desktop at 'localhost:{{ item.value.display_number }}'"
+          echo
+          echo "A free vnc viewer can be found here: https://www.realvnc.com/en/connect/download/viewer/"
+          echo
+        mode: "0750"
+        owner: "{{ item.key }}"
+        group: "{{ item.key }}"
+      loop: "{{ vm4workshop_users | dict2items }}"
+      when: ansible_facts.getent_passwd[item.key] is defined
+    when: VNC_USERS is defined or students is defined
+
+- name: PLAY to handle the student assignments csv
+  gather_facts: false
+  hosts: instructor_instances
+  become: true
+  tags: students_assignments
+  tasks:
+    - name: COPY; copy over the student assignments csv to all instructor instances into {{ CSV_ASSIGNMENTS_UPLOAD_LOCATION }}
+      ansible.builtin.copy:
+        src: "{{ CSV_LOCAL_FILE_PATH }}"
+        dest: "{{ CSV_ASSIGNMENTS_UPLOAD_LOCATION }}"
+        owner: root
+        group: root
+        mode: '0644'

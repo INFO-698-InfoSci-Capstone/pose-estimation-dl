@@ -1,0 +1,4 @@
+user,password,instance_name,ip_address,local_vnc_port
+%{ for index, elem in slist ~}
+${elem[0]},${elem[1]},${elem[2]},${elem[3]},${elem[4]}
+%{ endfor ~}
