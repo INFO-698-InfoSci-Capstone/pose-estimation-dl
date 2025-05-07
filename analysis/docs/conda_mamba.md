@@ -56,3 +56,45 @@ conda env export > environment.yml
 # Create environment from file
 conda env create -f environment.yml
 ```
+### Additional Useful Conda and Mamba Commands
+
+```bash
+# List all environments
+conda env list
+mamba env list
+
+# Activate an environment
+conda activate myenv
+mamba activate myenv
+
+# Deactivate the current environment
+conda deactivate
+mamba deactivate
+
+# List installed packages in the current environment
+conda list
+mamba list
+
+# Update a specific package
+conda update numpy
+mamba update numpy
+
+# Update all packages in the environment
+conda update --all
+mamba update --all
+
+# Remove a package from the environment
+conda remove pandas
+mamba remove pandas
+
+# Remove an environment completely
+conda env remove -n myenv
+mamba env remove -n myenv
+
+# Search for a package
+conda search scipy
+mamba search scipy
+
+# Clean up unused packages and caches
+conda clean --all
+mamba clean --all
