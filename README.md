@@ -1,12 +1,10 @@
-# Repository README
+# Deep Learning Pose Estimation INFO698 Capstone Project
 
 Welcome to the Pose Estimation Deep Learning Project Repository!
 
 This repository is organized as a reproducible research compendium for pose estimation using SLEAP and DeepLabCut. It contains code, data, documentation, and logs to support transparent, collaborative, and reproducible research.
 
 ---
-
-
 
 ## How to Navigate This Repository
 
@@ -70,22 +68,22 @@ We welcome contributions from the community! To ensure high standards of reprodu
 
 2. Set up your environment:
 
-- Use the provided Dockerfiles or Conda/Mamba environment files for reproducibility.
+    - Use the provided Dockerfiles or Conda/Mamba environment files for reproducibility.
 
 3. Add or modify content:
 
-- Place new scripts in src/
-- Add documentation to analysis/docs/
-- Log your work in analysis/logs/
+    - Place new scripts in src/
+    - Add documentation to analysis/docs/
+    - Log your work in analysis/logs/
 
 4. Test your changes:
 
-- Ensure your code runs in a clean environment.
-- Add tests or example notebooks if appropriate.
+    - Ensure your code runs in a clean environment.
+    - Add tests or example notebooks if appropriate.
 
 5. Submit your contribution:
 
-- Open a pull request with a clear description of your changes and their purpose.
+    - Open a pull request with a clear description of your changes and their purpose.
 
 ### Additional Resources
 - [Reproducible Research Wiki](https://github.com/ua-datalab/Reproducible-Research/wiki)
