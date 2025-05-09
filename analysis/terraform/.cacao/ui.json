@@ -1,8 +1,8 @@
 {
     "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/ui-schemas/v1/schema.json",
     "schema_version": "1",
-    "author": "Sean Davey",
-    "author_email": "sdavey@arizona.edu",
+    "author": "Nick Ferrante",
+    "author_email": "nferrante@arizona.edu",
     "steps": [
         {
             "title": "Parameters",
@@ -18,6 +18,14 @@
                 {
                     "name": "power_state",
                     "ui_label": "Power state"
+                },
+                {
+                    "name": "instance_instructor_count",
+                    "ui_label": "# of Instructors"
+                },
+                {
+                    "name": "student_usernames",
+                    "ui_label": "Student usernames"
                 },
                 {
                     "type": "row",

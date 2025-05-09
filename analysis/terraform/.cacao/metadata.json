@@ -1,10 +1,10 @@
 {
   "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/metadata-schemas/v3/schema.json",
-  "schema_version": "3",
-  "name": "vms 4 workshop",
-  "author": "Edwin Skidmore",
-  "author_email": "edwin@cyverse.org",
-  "description": "launch instances for a workshop",
+  "schema_version": "1",
+  "name": "pose estimation instances",
+  "author": "Nick Ferrante",
+  "author_email": "nferrante@arizona.edu",
+  "description": "Launch instances for SLEAP and DeepLabCut tools",
   "template_type": "openstack_terraform",
   "purpose": "openstack_compute",
   "cacao_pre_tasks": [],
@@ -19,12 +19,6 @@
       "name": "flavor",
       "type": "cacao_provider_flavor",
       "description": "Instance type"
-    },
-    {
-      "name": "image",
-      "type": "cacao_provider_image",
-      "default": "",
-      "description": "Boot image"
     },
     {
       "name": "ip_pool",
@@ -76,6 +70,12 @@
       "name": "instance_name",
       "type": "string",
       "description": "Instance name"
+    },
+    {
+      "name": "instance_count",
+      "type": "integer",
+      "default": 1,
+      "description": "# of instances"
     },
     {
       "name": "instructor_username",

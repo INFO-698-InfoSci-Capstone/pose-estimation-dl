@@ -31,6 +31,12 @@ variable "instance_instructor_count" {
   default = 1
 }
 
+variable "instructor_count" {
+  type = number
+  description = "number of instances to launch"
+  default = 1
+}
+
 variable "students_per_instance" {
   type = number
   description = "number, number of students to assign per instance"
@@ -52,13 +58,13 @@ variable "image" {
 variable "image_name" {
   type = string
   description = "string, name of image; image will have priority if both image and image name are provided"
-  default = ""
+  default = "Pose-Estimation"
 }
 
 variable "flavor" {
   type = string
   description = "flavor or size of instance to launch"
-  default = "m1.tiny"
+  default = "g3.medium"
 }
 
 variable "keypair" {
