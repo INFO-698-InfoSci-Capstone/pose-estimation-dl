@@ -2,7 +2,7 @@
 
 Welcome to the Pose Estimation Deep Learning Project Repository!
 
-This repository is organized as a reproducible research compendium for pose estimation using SLEAP and DeepLabCut. Our project is documented in 2 distinct ways: there is end user documentation, which can be found in this repository's wiki. And technical contributere documentation, where you are now. It contains code, data, documentation, and logs to support transparent, collaborative, and reproducible research. Whether your goal is to audit and review our work, reproduce it from scratch, or contribute to make improvements upon the work we have done, all of the information you need will be found here. 
+This repository is organized as a reproducible research compendium for pose estimation using SLEAP and DeepLabCut. Our project is documented in 2 distinct ways: there is end user documentation, which can be found in this repository's wiki. And technical contributere documentation, where you are now. It contains code, data, documentation, and logs to support transparent, collaborative, and reproducible research. Whether your goal is to audit and review our work, reproduce it from scratch, or contribute to make improvements upon the work we have done, all of the information you need will be found here.
 
 ---
 
@@ -13,15 +13,19 @@ This repository is organized as a reproducible research compendium for pose esti
 
 - **analysis/**
   Contains all analysis-related materials:
-  - `docs/` – Technical User guides, technical documentation, and workflow instructions (!! Most important for those who want to know how we got to this point, and how you would too)
-  - `logs/` – Weekly/bi-weekly logs using the Rose/Bud/Thorn model for project tracking and reflection (This was primarily for the projects' creators to track progress for class credit)
-  - `data/` – Data used for analysis, including raw and derived datasets. (this is primarily empty - this project was largely absent of datasets. The data we were working with was particularly large considering it was video data, and efforts are being made to get that into large file storage)
-  - `dockerfiles/` – Dockerfiles for building reproducible computational environments. (this is another important one, considering the bulk of the project's objective was to containerize these applications into stable, user friendly workflow environments. This includes the current working and deployed dockerfiles, archived ppast iterations, and developmental future enhancements 
+  - `docs/` – Technical User guides, technical documentation, and workflow instructions
+    - Most important for those who want to know how we got to this point, and how you would too
+  - `logs/` – Weekly/bi-weekly logs using the Rose/Bud/Thorn model for project tracking and reflection
+    - This was Largely for the projects' creators to track progress for class credit
+  - `data/` – Data used for analysis, including raw and derived datasets.
+
+  - `dockerfiles/` – Dockerfiles for building reproducible computational environments.
+    - this is another important one, considering the bulk of the project's objective was to containerize these applications into stable, user friendly workflow environments. This includes the current working and deployed dockerfiles, archived ppast iterations, and developmental future enhancements
   - `notes/` – Supplementary notes, link collections, and workflow tips. Essentially a scratchpad
-  - `terraform/` - Files pertaining to terraform and infrastructure as code, specifically for cacao, which allows us to make predefined templates for users to interact with our tools via jetstream. 
+  - `terraform/` - Files pertaining to terraform and infrastructure as code, specifically for cacao, which allows us to make predefined templates for users to interact with our tools via jetstream.
 
 - **src/**
-  Source code for scripts and pipelines used in the project.
+  Source code for scripts and pipelines used in the project. Largely empty
 
 - **CONDUCT.md**
   Contributor Code of Conduct. Please read before contributing.
@@ -35,15 +39,13 @@ We welcome contributions from the community! To ensure high standards of reprodu
 ### 1. Reproducible Research Best Practices
 
 - **Document Everything:**
-  Clearly comment your code and document workflows in the appropriate `docs/` files.
+  Clearly comment your code and document workflows in the appropriate `docs/` files. If something has changed since our initial docs (e.g. you are following along run into an update or edge case) please feel free to update those so that the next person after you has the most current directions
 - **Use Version Control:**
-  Make all changes via pull requests and provide clear commit messages.
+  Make all changes via pull requests and provide clear commit messages. The main branch will be the single source of truth for which dockerfiles are deployed to various environments and what terraform is applied. So you should be branching off of main, then creating pull requests back into main which can be reviewed by a repo maintainer
 - **Environment Management:**
   Use Dockerfiles or `environment.yml` files to specify dependencies. Avoid "it works on my machine" issues.
 - **Data Provenance:**
   Place raw data in `analysis/data/rawData/` and derived data in `analysis/data/derivedData/`. Document data sources and processing steps.
-- **Logs:**
-  Use the Rose/Bud/Thorn format in `analysis/logs/` to track progress and challenges.
 
 ### 2. Open Source Best Practices
 
@@ -65,7 +67,6 @@ We welcome contributions from the community! To ensure high standards of reprodu
    git clone <repo-url>
    cd pose-estimation-dl
    ```
-
 
 2. Set up your environment:
 
