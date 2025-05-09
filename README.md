@@ -2,7 +2,7 @@
 
 Welcome to the Pose Estimation Deep Learning Project Repository!
 
-This repository is organized as a reproducible research compendium for pose estimation using SLEAP and DeepLabCut. It contains code, data, documentation, and logs to support transparent, collaborative, and reproducible research.
+This repository is organized as a reproducible research compendium for pose estimation using SLEAP and DeepLabCut. Our project is documented in 2 distinct ways: there is end user documentation, which can be found in this repository's wiki. And technical contributere documentation, where you are now. It contains code, data, documentation, and logs to support transparent, collaborative, and reproducible research. Whether your goal is to audit and review our work, reproduce it from scratch, or contribute to make improvements upon the work we have done, all of the information you need will be found here. 
 
 ---
 
@@ -13,11 +13,12 @@ This repository is organized as a reproducible research compendium for pose esti
 
 - **analysis/**
   Contains all analysis-related materials:
-  - `docs/` – User guides, technical documentation, and workflow instructions.
-  - `logs/` – Weekly/bi-weekly logs using the Rose/Bud/Thorn model for project tracking and reflection.
-  - `data/` – Data used for analysis, including raw and derived datasets.
-  - `dockerfiles/` – Dockerfiles for building reproducible computational environments.
-  - `notes/` – Supplementary notes, link collections, and workflow tips.
+  - `docs/` – Technical User guides, technical documentation, and workflow instructions (!! Most important for those who want to know how we got to this point, and how you would too)
+  - `logs/` – Weekly/bi-weekly logs using the Rose/Bud/Thorn model for project tracking and reflection (This was primarily for the projects' creators to track progress for class credit)
+  - `data/` – Data used for analysis, including raw and derived datasets. (this is primarily empty - this project was largely absent of datasets. The data we were working with was particularly large considering it was video data, and efforts are being made to get that into large file storage)
+  - `dockerfiles/` – Dockerfiles for building reproducible computational environments. (this is another important one, considering the bulk of the project's objective was to containerize these applications into stable, user friendly workflow environments. This includes the current working and deployed dockerfiles, archived ppast iterations, and developmental future enhancements 
+  - `notes/` – Supplementary notes, link collections, and workflow tips. Essentially a scratchpad
+  - `terraform/` - Files pertaining to terraform and infrastructure as code, specifically for cacao, which allows us to make predefined templates for users to interact with our tools via jetstream. 
 
 - **src/**
   Source code for scripts and pipelines used in the project.
