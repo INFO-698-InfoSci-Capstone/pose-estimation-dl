@@ -1,6 +1,6 @@
 {
   "schema_url": "https://gitlab.com/cyverse/cacao-common/-/raw/master/template/metadata-schemas/v3/schema.json",
-  "schema_version": "1",
+  "schema_version": "3",
   "name": "pose estimation instances",
   "author": "Nick Ferrante",
   "author_email": "nferrante@arizona.edu",
