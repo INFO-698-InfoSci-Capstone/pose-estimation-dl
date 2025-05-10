@@ -52,7 +52,7 @@ variable "min_instances" {
 variable "image" {
   type = string
   description = "string, image id; image will have priority if both image and image name are provided"
-  default = ""
+  default = "58c48130-d4e2-4d61-b743-317f5842a53e"
 }
 
 variable "image_name" {
