@@ -72,12 +72,6 @@
       "description": "Instance name"
     },
     {
-      "name": "instance_count",
-      "type": "integer",
-      "default": 1,
-      "description": "# of instances"
-    },
-    {
       "name": "instructor_username",
       "type": "string",
       "default": "instructor",

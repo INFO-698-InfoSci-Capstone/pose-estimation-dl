@@ -28,17 +28,8 @@
                     "ui_label": "Student usernames"
                 },
                 {
-                    "type": "row",
-                    "items":[
-                        {
-                            "name": "instance_count",
-                            "ui_label": "# of Instances"
-                        },
-                        {
-                            "name": "flavor",
-                            "ui_label": "Size"
-                        }
-                    ]
+                    "name": "flavor",
+                    "ui_label": "Size (select g3.medium or larger)"
                 },
                 {
                     "type": "advanced_settings",
