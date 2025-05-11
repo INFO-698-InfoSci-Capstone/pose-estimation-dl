@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sleap
+Comment=Launch Sleap GUI
+Exec=/home/kasm-user/shortcut-files/launch_sleap.sh
+Icon=/home/kasm-user/shortcut-files/sleapIcon.png
+Terminal=true
+Categories=Development;

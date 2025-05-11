@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Jupyter
+Comment=Launch Jupyter
+Exec=/home/kasm-user/shortcut-files/launch_jupyter.sh
+Icon=/home/kasm-user/shortcut-files/jupyterIcon.png
+Terminal=false
+Categories=Development;

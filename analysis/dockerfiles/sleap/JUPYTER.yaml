@@ -1,0 +1,14 @@
+name: jupyter
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - ipython
+  - jupyter
+  - nb_conda
+  - notebook<7.0.0
+  - ffmpeg
+  - pytables==3.8.0
+

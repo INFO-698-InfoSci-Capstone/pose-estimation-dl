@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Nvitop
+Comment=Launch nvitop terminal
+Exec=/home/kasm-user/shortcut-files/launch_nvitop.sh
+Icon=/home/kasm-user/shortcut-files/nvitopIcon.png
+Terminal=true
+Categories=Development;

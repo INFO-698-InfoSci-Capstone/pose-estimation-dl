@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=DeepLabCut
+Comment=Launch DeepLabCut GUI
+Exec=/home/kasm-user/shortcut-files/launch_deeplabcut.sh
+Icon=/home/kasm-user/shortcut-files/deeplabcutIcon.png
+Terminal=true
+Categories=Development;
