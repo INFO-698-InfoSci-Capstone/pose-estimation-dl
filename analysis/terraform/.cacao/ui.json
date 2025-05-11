@@ -29,8 +29,7 @@
                 },
                 {
                     "name": "flavor",
-                    "ui_label": "Size (select g3.medium or larger)",
-                    "default": "g3.medium"
+                    "ui_label": "Size (select g3.medium or larger)"
                 },
                 {
                     "type": "advanced_settings",
