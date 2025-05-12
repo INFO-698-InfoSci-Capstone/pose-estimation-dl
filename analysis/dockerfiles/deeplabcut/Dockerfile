@@ -59,11 +59,8 @@ COPY launch_deeplabcut.sh /home/kasm-user/shortcut-files
 RUN sudo chmod +x /home/kasm-user/shortcut-files/launch_deeplabcut.sh
 
 COPY deeplabcut.desktop /home/kasm-user/Desktop
-RUN chmod +x /home/kasm-user/Desktop/deeplabcut.desktop
-
-#RUN echo "[Desktop Entry]\nVersion=1.0\nName=DEEPLABCUT\nComment=DEEPLABCUT Animal Pose Tracking\nExec=bash -c 'source /home/kasm-user/miniconda3/etc/profile.d/conda.sh && conda activate DEEPLABCUT && python -m deeplabcut'\nTerminal=false\nType=Application\nIcon=utilities-terminal\nCategories=Science;" > /home/kasm-user/Desktop/DEEPLABCUT.desktop && \
-#    chmod +x /home/kasm-user/Desktop/DEEPLABCUT.desktop && \
-#    chown ${LOCAL_USER}:${LOCAL_USER} /home/kasm-user/Desktop/DEEPLABCUT.desktop
+RUN sudo chmod +x /home/kasm-user/Desktop/deeplabcut.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/deeplabcut.desktop
 
 # Create desktop shortcut for Jupyter
 COPY jupyterIcon.png /home/kasm-user/shortcut-files
@@ -71,7 +68,8 @@ COPY launch_jupyter.sh /home/kasm-user/shortcut-files
 RUN sudo chmod +x /home/kasm-user/shortcut-files/launch_jupyter.sh
 
 COPY jupyter.desktop /home/kasm-user/Desktop
-RUN sudo chmod +x /home/kasm-user/Desktop/jupyter.desktop
+RUN sudo chmod +x /home/kasm-user/Desktop/jupyter.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/jupyter.desktop
 
 # Create desktop shortcut for nvitop
 COPY nvitopIcon.png /home/kasm-user/shortcut-files
@@ -79,7 +77,8 @@ COPY launch_nvitop.sh /home/kasm-user/shortcut-files
 RUN sudo chmod +x /home/kasm-user/shortcut-files/launch_nvitop.sh
 
 COPY nvitop.desktop /home/kasm-user/Desktop
-RUN sudo chmod +x /home/kasm-user/Desktop/nvitop.desktop
+RUN sudo chmod +x /home/kasm-user/Desktop/nvitop.desktop && \
+    chown 1000:1000 /home/kasm-user/Desktop/nvitop.desktop
 
 # Copy the Jupyter notebooks into ~/deeplabcut-notebooks
 COPY notebooks/ /home/kasm-user/deeplabcut-notebooks
