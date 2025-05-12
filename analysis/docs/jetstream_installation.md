@@ -207,6 +207,16 @@ mkdir /home/exouser/jupyter_notebooks/sleap
 
 4. Move the DeepLabCut notebooks to the proper directory
 
+    - If the DeepLabCut notebooks are the only files in the Downloads folder then you can do:
+
+```
+mv ~/Downloads/* ~/jupyter_notebooks/sleap
+```
+
+<!-- bullet format -->
+
+    - Otherwise if there are other files in the downloads folder:
+
 ```
 cd ~/Downloads
 ```
@@ -214,9 +224,6 @@ cd ~/Downloads
 ```
 mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_yourowndata.ipynb DeepLabCut_COLAB_DLC_ModelZoo.ipynb /home/exouser/jupyter_notebooks/deeplabcut
 ```
-
-
-    - Fil
 
 5. Download the [SLEAP notebooks](https://sleap.ai/notebooks/index.html)
     1. [Training and inference on an example dataset](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Training_and_inference_on_an_example_dataset.ipynb)
@@ -227,6 +234,29 @@ mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_your
     6. [Interactive training](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Interactive_and_resumable_training.ipynb)
     7. [Interactive and realtime inference](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Interactive_and_realtime_inference.ipynb)
     8. [Model evaluation](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Model_evaluation.ipynb)
+
+![Jetstream SLEAP notebooks](images/jetstream_sleap_notebooks.png)
+
+6. Move the SLEAP notebooks to the proper directory
+
+    - If the SLEAP notebooks are the only files in the Downloads folder:
+
+```
+mv ~/Downloads/* ~/jupyter_notebooks/sleap
+```
+
+<!-- bullet format -->
+
+    - Otherwise if there are other files in the downloads folder:
+
+```
+cd ~/Downloads
+```
+
+```
+mv Training_and_inference_using_Google_Drive.ipynb Training_and_inference_on_an_example_dataset.ipynb SLEAP_Post_inference_tracking.ipynb SLEAP_Interactive_and_resumable_training.ipynb SLEAP_Interactive_and_realtime_inference.ipynb SLEAP_Data_structures.ipynb Model_evaluation.ipynb Analysis_examples.ipynb
+```
+
 
 ## Create Desktop shortcuts for SLEAP, DeepLabCut, Jupyter, and nvitop
 
