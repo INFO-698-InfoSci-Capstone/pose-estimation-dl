@@ -26,7 +26,7 @@
 
 ![Jetstream instance terminal](images/jetstream_instance_terminal.png)
 
-2. Paste the following code:
+2. Paste and run the following code:
 
 ```
 wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
@@ -176,17 +176,61 @@ python3 -c "import sleap; sleap.system_summary()"
 sleap-label
 ```
 
-## Create a conda environment for Jupyter
+## Setup the environment and notebook files for Jupyter
 
-1. Paste the following code in the terminal:
+### Jupyter environment creation
+
+1. Create a conda environment with Jupyter installed:
 
 ```
 conda create -n jupyter python=3.10 ipython jupyter nb_conda 'notebook<7.0.0' -y
 ```
 
+### Download DeepLabCut and SLEAP notebooks
+
+1. Create new directories to store the notebooks
+
+```
+mkdir -p /home/exouser/jupyter_notebooks/deeplabcut
+```
+
+```
+mkdir /home/exouser/jupyter_notebooks/sleap
+```
+
+2. Download the [DeepLabCut notebooks](https://github.com/DeepLabCut/DeepLabCut/blob/main/examples/README.md)   
+    1. [Demo on your own data](https://github.com/DeepLabCut/DeepLabCut/blob/main/examples/JUPYTER/Demo_yourowndata.ipynb)
+    2. [Training and evaluating a network](https://colab.research.google.com/github/DeepLabCut/DeepLabCut/blob/master/examples/COLAB/COLAB_YOURDATA_TrainNetwork_VideoAnalysis.ipynb)
+    3. [Model Zoo](https://colab.research.google.com/github/DeepLabCut/DeepLabCut/blob/master/examples/COLAB/COLAB_DLC_ModelZoo.ipynb)
+
+![DeepLabCut notebooks](images/jetstream_deeplabcut_notebooks.png)
+
+4. Move the DeepLabCut notebooks to the proper directory
+
+```
+cd ~/Downloads
+```
+
+```
+mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_yourowndata.ipynb DeepLabCut_COLAB_DLC_ModelZoo.ipynb /home/exouser/jupyter_notebooks/deeplabcut
+```
+
+
+    - Fil
+
+5. Download the [SLEAP notebooks](https://sleap.ai/notebooks/index.html)
+    1. [Training and inference on an example dataset](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Training_and_inference_on_an_example_dataset.ipynb)
+    2. [Training and inference on your own data](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Training_and_inference_using_Google_Drive.ipynb)
+    3. [Analysis examples](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Analysis_examples.ipynb)
+    4. [Data structures](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Data_structures.ipynb)
+    5. [Post inference tracking](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Post_inference_tracking.ipynb)
+    6. [Interactive training](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Interactive_and_resumable_training.ipynb)
+    7. [Interactive and realtime inference](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Interactive_and_realtime_inference.ipynb)
+    8. [Model evaluation](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Model_evaluation.ipynb)
+
 ## Create Desktop shortcuts for SLEAP, DeepLabCut, Jupyter, and nvitop
 
-### SLEAP Desktop shortcut
+### SLEAP desktop shortcut
 
 1. Download the SLEAP icon from https://sleap.ai/installation.html
     - Open the side menu on the left and download the image
@@ -262,7 +306,7 @@ chmod +x ~/.local/share/applications/sleap.desktop
 9. Drag the SLEAP icon into the dock
 
 
-### DeepLabCut Desktop shortcut
+### DeepLabCut desktop shortcut
 
 1. Download the DeepLabCut icon from https://deeplabcut.github.io/DeepLabCut/docs/installation.html
     - Open the side menu on the left and download the image
@@ -337,9 +381,9 @@ chmod +x ~/.local/share/applications/deeplabcut.desktop
 
 9. Drag the DeepLabCut icon into the dock
 
-### Jupyter Desktop shortcut
+### Jupyter desktop shortcut
 
-1. Download the Jupyter icon from the web browser
+1. Download the Jupyter icon from the web browser and save it as "jupyterIcon.png"
 
 2. Create a launch_jupyter.sh file
 
@@ -350,14 +394,15 @@ vim ~/launch_jupyter.sh
 3. Paste the following contents in the .sh file
 
 ```
-#!/bin/bash                                                                     
+#!/bin/bash              
 {
 source /home/exouser/miniconda3/etc/profile.d/conda.sh
 conda init
 source /home/exouser/.bashrc
-conda activate DEEPLABCUT
+conda activate jupyter
+cd /home/exouser/jupyter_notebooks
 } > /dev/null 2>&1
-python -m deeplabcut
+jupyter notebook
 ```
 
 - After doing ```vim ~/launch_jupyter.sh``` in the terminal, perform the following steps:
