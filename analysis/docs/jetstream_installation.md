@@ -445,13 +445,13 @@ jupyter notebook
 4. Set the right permissions
 
 ```
-chmod +x ~/launch_deeplabcut.sh
+chmod +x ~/launch_jupyter.sh
 ```
 
 5. Create a .desktop file
 
 ```
-vim ~/.local/share/applications/deeplabcut.desktop
+vim ~/.local/share/applications/jupyter.desktop
 ```
 
 6. Paste the following contents in the .desktop file
@@ -460,15 +460,15 @@ vim ~/.local/share/applications/deeplabcut.desktop
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=DEEPLABCUT
-Comment=Launch DEEPLABCUT GUI
-Exec=/home/exouser/launch_deeplabcut.sh
-Icon=/home/exouser/Downloads/deeplabcutIcon.png
-Terminal=true
+Name=Jupyter
+Comment=Launch Jupyter
+Exec=/home/exouser/launch_jupyter.sh
+Icon=/home/exouser/Downloads/jupyterIcon.png
+Terminal=false
 Categories=Development;
 ```
 
-- After doing ```vim ~/.local/share/applications/deeplabcut.desktop``` in the terminal, perform the following steps:
+- After doing ```vim ~/.local/share/applications/jupyter.desktop``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -478,9 +478,82 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x ~/.local/share/applications/deeplabcut.desktop
+chmod +x ~/.local/share/applications/jupyter.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
 
-9. Drag the DeepLabCut icon into the dock
+9. Drag the Jupyter icon into the dock
+
+### nvitop desktop shortcut
+
+1. Download an image to use as the nvitop icon from the web browser and save it as "nvitopIcon.png"
+
+2. Create a launch_nvitop.sh file
+
+```
+vim ~/launch_nvitop.sh
+```
+
+3. Paste the following contents in the .sh file
+
+```
+#!/bin/bash                                                                     
+{
+source /home/exouser/miniconda3/etc/profile.d/conda.sh
+conda init
+source /home/exouser/.bashrc
+conda activate base
+} > /dev/null 2>&1
+nvitop
+```
+
+- After doing ```vim ~/launch_nvitop.sh``` in the terminal, perform the following steps:
+    1. Copy the contents from the code chunk
+    2. In the file, press ```i``` to enter INSERT mode
+    3. Paste the contents into the file
+    4. Press ```esc```
+    5. Type ```:wq``` and press ```enter``` to save and exit the file
+
+4. Set the right permissions
+
+```
+chmod +x ~/launch_nvitop.sh
+```
+
+5. Create a .desktop file
+
+```
+vim ~/.local/share/applications/nvitop.desktop
+```
+
+6. Paste the following contents in the .desktop file
+
+```
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=nvitop
+Comment=Launch nvitop
+Exec=/home/exouser/launch_nvitop.sh
+Icon=/home/exouser/Downloads/nvitopIcon.png
+Terminal=true
+Categories=Development;
+```
+
+- After doing ```vim ~/.local/share/applications/nvitop.desktop``` in the terminal, perform the following steps:
+    1. Copy the contents from the code chunk
+    2. In the file, press ```i``` to enter INSERT mode
+    3. Paste the contents into the file
+    4. Press ```esc```
+    5. Type ```:wq``` and press ```enter``` to save and exit the file
+
+7. Set the right permissions
+
+```
+chmod +x ~/.local/share/applications/nvitop.desktop
+```
+
+8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
+
+9. Drag the nvitop icon into the dock
