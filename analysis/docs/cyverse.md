@@ -56,7 +56,7 @@ docker pull yourDockerUsername/yourImageName:tagName
 
 ### Creating an app
 
-1. After creating the tool, go Apps in the menu on the left and select Create App
+1. After creating the tool, go to Apps in the menu on the left and select Create App
 
 ![CyVerse Create App](images/cyverse_app_create.png)
 
@@ -72,7 +72,7 @@ docker pull yourDockerUsername/yourImageName:tagName
 
 ![CyVerse Save App](images/cyverse_save_app.png)
 
-5. Back in the apps window, open the dropdown menu where it shows "Featured Apps" and select Apps Under Development
+5. Back in the apps window, open the dropdown menu where it says "Featured Apps" and select Apps Under Development
 
 ![CyVerse Apps Under Development](images/cyverse_development_apps.png)
 
