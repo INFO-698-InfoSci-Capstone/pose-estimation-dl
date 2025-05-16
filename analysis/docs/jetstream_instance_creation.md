@@ -356,7 +356,7 @@ Terminal=true
 Categories=Development;
 ```
 
-- After doing ```vim ~/.local/share/applications/sleap.desktop``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/share/applications/sleap.desktop``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -366,7 +366,7 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x /usr/share/applications/sleap.desktop
+sudo chmod +x /usr/share/applications/sleap.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
@@ -388,23 +388,21 @@ chmod +x /usr/share/applications/sleap.desktop
 2. Create a launch_deeplabcut.sh file
 
 ```
-vim ~/launch_deeplabcut.sh
+sudo vim /usr/local/shortcut-files/launch_deeplabcut.sh
 ```
 
 3. Paste the following contents in the .sh file
 
 ```
-#!/bin/bash                                                                     
+#!/bin/bash
 {
-source /home/exouser/miniconda3/etc/profile.d/conda.sh
-conda init
-source /home/exouser/.bashrc
+source /etc/bash.bashrc
 conda activate DEEPLABCUT
 } > /dev/null 2>&1
-python -m deeplabcut
+/opt/miniconda3/envs/DEEPLABCUT/bin/python /opt/miniconda3/envs/DEEPLABCUT/lib/python3.10/site-packages/deeplabcut/__main__.py
 ```
 
-- After doing ```vim ~/launch_deeplabcut.sh``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/local/shortcut-files/launch_deeplabcut.sh``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -414,13 +412,13 @@ python -m deeplabcut
 4. Set the right permissions
 
 ```
-chmod +x ~/launch_deeplabcut.sh
+sudo chmod +x /usr/local/shortcut-files/launch_deeplabcut.sh
 ```
 
 5. Create a .desktop file
 
 ```
-vim ~/.local/share/applications/deeplabcut.desktop
+sudo vim /usr/share/applications/deeplabcut.desktop
 ```
 
 6. Paste the following contents in the .desktop file
@@ -431,13 +429,13 @@ Version=1.0
 Type=Application
 Name=DEEPLABCUT
 Comment=Launch DEEPLABCUT GUI
-Exec=/home/exouser/launch_deeplabcut.sh
-Icon=/home/exouser/Downloads/deeplabcutIcon.png
+Exec=/usr/local/shortcut-files/launch_deeplabcut.sh
+Icon=/usr/local/shortcut-files/deeplabcutIcon.png
 Terminal=true
 Categories=Development;
 ```
 
-- After doing ```vim ~/.local/share/applications/deeplabcut.desktop``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/share/applications/deeplabcut.desktop``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -447,7 +445,7 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x ~/.local/share/applications/deeplabcut.desktop
+sudo chmod +x /usr/share/applications/deeplabcut.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
@@ -457,28 +455,30 @@ chmod +x ~/.local/share/applications/deeplabcut.desktop
 ### Jupyter desktop shortcut
 
 1. Download the Jupyter icon from the web browser and save it as "jupyterIcon.png"
+    - Move the image file to `/usr/local/shortcut-files` 
+
+    ```
+    sudo mv /home/exouser/Downloads/jupyterIcon.png /usr/local/shortcut-files
+    ```
 
 2. Create a launch_jupyter.sh file
 
 ```
-vim ~/launch_jupyter.sh
+sudo vim /usr/local/shortcut-files/launch_sleap.sh
 ```
 
 3. Paste the following contents in the .sh file
 
 ```
-#!/bin/bash              
+#!/bin/bash
 {
-source /home/exouser/miniconda3/etc/profile.d/conda.sh
-conda init
-source /home/exouser/.bashrc
-conda activate jupyter
-cd /home/exouser/jupyter_notebooks
+source /etc/bash.bashrc
+conda activate sleap
 } > /dev/null 2>&1
-jupyter notebook
+/opt/miniconda3/envs/sleap/bin/sleap-label
 ```
 
-- After doing ```vim ~/launch_jupyter.sh``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/local/shortcut-files/launch_sleap.sh``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -488,13 +488,13 @@ jupyter notebook
 4. Set the right permissions
 
 ```
-chmod +x ~/launch_jupyter.sh
+sudo chmod +x /usr/local/shortcut-files/launch_sleap.sh
 ```
 
 5. Create a .desktop file
 
 ```
-vim ~/.local/share/applications/jupyter.desktop
+sudo vim /usr/share/applications/sleap.desktop
 ```
 
 6. Paste the following contents in the .desktop file
@@ -503,15 +503,15 @@ vim ~/.local/share/applications/jupyter.desktop
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Jupyter
-Comment=Launch Jupyter
-Exec=/home/exouser/launch_jupyter.sh
-Icon=/home/exouser/Downloads/jupyterIcon.png
-Terminal=false
+Name=SLEAP
+Comment=Launch SLEAP GUI
+Exec=/usr/local/shortcut-files/launch_sleap.sh
+Icon=/usr/local/shortcut-files/sleapIcon.png
+Terminal=true
 Categories=Development;
 ```
 
-- After doing ```vim ~/.local/share/applications/jupyter.desktop``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/share/applications/sleap.desktop``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -521,7 +521,7 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x ~/.local/share/applications/jupyter.desktop
+sudo chmod +x /usr/share/applications/sleap.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
@@ -531,27 +531,30 @@ chmod +x ~/.local/share/applications/jupyter.desktop
 ### nvitop desktop shortcut
 
 1. Download an image to use as the nvitop icon from the web browser and save it as "nvitopIcon.png"
+    - Move the image file to `/usr/local/shortcut-files` 
+
+    ```
+    sudo mv /home/exouser/Downloads/nvitopIcon.png /usr/local/shortcut-files/
+    ```
 
 2. Create a launch_nvitop.sh file
 
 ```
-vim ~/launch_nvitop.sh
+sudo vim /usr/local/shortcut-files/launch_nvitop.sh
 ```
 
 3. Paste the following contents in the .sh file
 
 ```
-#!/bin/bash                                                                     
+#!/bin/bash                           
 {
-source /home/exouser/miniconda3/etc/profile.d/conda.sh
-conda init
-source /home/exouser/.bashrc
+source /etc/bash.bashrc
 conda activate base
 } > /dev/null 2>&1
-nvitop
+/opt/miniconda3/bin/nvitop
 ```
 
-- After doing ```vim ~/launch_nvitop.sh``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/local/shortcut-files/launch_nvitop.sh``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -561,13 +564,13 @@ nvitop
 4. Set the right permissions
 
 ```
-chmod +x ~/launch_nvitop.sh
+sudo chmod +x /usr/local/shortcut-files/launch_nvitop.sh
 ```
 
 5. Create a .desktop file
 
 ```
-vim ~/.local/share/applications/nvitop.desktop
+sudo vim /usr/share/applications/nvitop.desktop
 ```
 
 6. Paste the following contents in the .desktop file
@@ -578,13 +581,13 @@ Version=1.0
 Type=Application
 Name=nvitop
 Comment=Launch nvitop
-Exec=/home/exouser/launch_nvitop.sh
-Icon=/home/exouser/Downloads/nvitopIcon.png
+Exec=/usr/local/shortcut-files/launch_nvitop.sh
+Icon=/usr/local/shortcut-files/nvitopIcon.png
 Terminal=true
 Categories=Development;
 ```
 
-- After doing ```vim ~/.local/share/applications/nvitop.desktop``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/share/applications/nvitop.desktop``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
     2. In the file, press ```i``` to enter INSERT mode
     3. Paste the contents into the file
@@ -594,9 +597,29 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x ~/.local/share/applications/nvitop.desktop
+sudo chmod +x /usr/share/applications/nvitop.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
 
 9. Drag the nvitop icon into the dock
+
+## Add the shorcut icons to the desktop's dock
+
+1. Get the list of apps currently in the dock
+
+```
+gsettings get org.gnome.shell favorite-apps
+```
+
+- This will return a list such as
+
+    ```
+    ['firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']
+    ```
+
+2. Add the newly created shortcuts to the dock
+
+```
+gsettings set org.gnome.shell favorite-apps "['firefox.desktop', 'sleap.desktop', 'deeplabcut.desktop', 'jupyter.desktop', 'filezilla.desktop', 'nvitop.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'org.gnome.Software.desktop', 'yelp.desktop']"
+```
