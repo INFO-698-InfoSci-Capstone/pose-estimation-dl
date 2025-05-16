@@ -29,46 +29,67 @@
 2. Paste and run the following code:
 
 ```
-wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+sudo wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda.sh
 ```
 
-2. Set the permissions of miniconda.sh to read, write, and execute
+3. Set the permissions of miniconda.sh to read, write, and execute
 
 ```
-sudo chmod 777 miniconda.sh
+sudo chmod 777 /opt/miniconda.sh
 ```
 
-3. Install conda in /home/exouser
+4. Install conda in /opt
 
 ```
-~/miniconda.sh -b -p /home/exouser/miniconda3
+sudo /opt/miniconda.sh -b -p /opt/miniconda3
 ```
 
-5. Add conda to path
+5. Modify the permissions of /opt/miniconda3
 
 ```
-export PATH=/home/exouser/miniconda3/bin:$PATH
+sudo chown -R $USER:$USER /opt/miniconda3
 ```
 
-4. Initialize conda
+6. Add conda to path
+
+```
+export PATH=/opt/miniconda3/bin:$PATH
+```
+
+7. Initialize conda
 
 ```
 conda init
 ```
 
-5. Restart the terminal
+8. Initialize conda system wide
+
+    - Open the global shell configuration file
+
+    ```
+    sudo vim /etc/bash.bashrc
+    ```
+
+    - Add the following lines to the bottom of the file
+
+    ```
+    . /opt/miniconda3/etc/profile.d/conda.sh
+    conda activate
+    ```
+
+9. Restart the terminal
 
 ```
  source ~/.bashrc
 ```
 
-6. Activate the base conda environment
+10. Activate the base conda environment
 
 ```
  conda activate base
 ```
 
-7. Install conda dependencies
+11. Install conda dependencies
 
 ```
 conda install -c conda-forge mamba -y
