@@ -32,6 +32,14 @@
 - `keypair`: the name of one of your keypairs found [here](https://js2.jetstream-cloud.org/project/key_pairs)
 - Comment out the `share_name`, `share_access_key`, `share_mount_path`, and `instructors_ssh_keys_base64` variables
 
+4. Modify the inputs.tf file to specify the default values that will be used for the parameters. This will include the image that will be used to create the instances, the size of the instance, etc.
+
+![inputs.tf File](images/terraform_inputs.png)
+
+- In the `image` parameter, set the default value to be the ID of the image you created
+- Set the `image_name` parameter to be the name of the image you created
+- Set the `flavor` parameter to be the size of the instance that is required for your application
+
 4. Modify the ui.json file to include the necessary configuration parameters, ensuring that any parameters listed in the ui.json file are also present in the metadata.json file.
 
 ![Matching ui.json and metadata.json parameters](images/terraform_ui_metadata_json.png)
