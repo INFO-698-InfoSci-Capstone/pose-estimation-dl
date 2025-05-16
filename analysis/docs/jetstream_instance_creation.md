@@ -70,12 +70,16 @@ conda init
     sudo vim /etc/bash.bashrc
     ```
 
-    - Add the following lines to the bottom of the file
+    - Press `i`, then add the following lines to the bottom of the file
 
     ```
     . /opt/miniconda3/etc/profile.d/conda.sh
-    conda activate
+    conda activate base
     ```
+
+    - After doing adding these lines to the bottom of the file:
+        1. Press `esc` to exit `INSERT` mode
+        2. Type `:wq` and press `enter` to save and exit the file
 
 9. Restart the terminal
 
@@ -113,13 +117,20 @@ sudo apt install filezilla -y
  - Drag it's desktop icon into the pinned apps on the dock
 
 ## [Installing DeepLabCut](https://deeplabcut.github.io/DeepLabCut/docs/installation.html)
-1. Create a yaml file for DeepLabCut’s environment creation
+
+1. Set the working directory to `/usr/local`
+
+```
+cd /usr/local
+```
+
+2. Create a yaml file for DeepLabCut’s environment creation
 
 ```
 vim DEEPLABCUT.yaml
 ```
 
-2. Copy the contents from [here](https://github.com/DeepLabCut/DeepLabCut/blob/main/conda-environments/DEEPLABCUT.yaml) into the yaml file
+3. Copy the contents from [here](https://github.com/DeepLabCut/DeepLabCut/blob/main/conda-environments/DEEPLABCUT.yaml) into the yaml file
 - After doing ```vim DEEPLABCUT.yaml``` in the terminal, perform the following steps:
     1. Copy the raw yaml file from the link
     2. In the file, press ```i``` to enter INSERT mode
@@ -212,11 +223,11 @@ conda create -n jupyter python=3.10 ipython jupyter nb_conda 'notebook<7.0.0' -y
 1. Create new directories to store the notebooks
 
 ```
-mkdir -p /home/exouser/jupyter_notebooks/deeplabcut
+sudo mkdir -p /usr/local/jupyter_notebooks/deeplabcut
 ```
 
 ```
-mkdir /home/exouser/jupyter_notebooks/sleap
+sudo mkdir -p /usr/local/jupyter_notebooks/sleap
 ```
 
 2. Download the [DeepLabCut notebooks](https://github.com/DeepLabCut/DeepLabCut/blob/main/examples/README.md)   
@@ -230,21 +241,20 @@ mkdir /home/exouser/jupyter_notebooks/sleap
 
     - If the DeepLabCut notebooks are the only files in the Downloads folder then you can do:
 
-```
-mv ~/Downloads/* ~/jupyter_notebooks/sleap
-```
+    ```
+    sudo mv ~/Downloads/* /usr/local/jupyter_notebooks/deeplabcut
+    ```
 
-<!-- bullet format -->
 
     - Otherwise if there are other files in the downloads folder:
 
-```
-cd ~/Downloads
-```
+    ```
+    cd ~/Downloads
+    ```
 
-```
-mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_yourowndata.ipynb DeepLabCut_COLAB_DLC_ModelZoo.ipynb /home/exouser/jupyter_notebooks/deeplabcut
-```
+    ```
+    sudo mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_yourowndata.ipynb DeepLabCut_COLAB_DLC_ModelZoo.ipynb /usr/local/jupyter_notebooks/deeplabcut
+    ```
 
 5. Download the [SLEAP notebooks](https://sleap.ai/notebooks/index.html)
     1. [Training and inference on an example dataset](https://colab.research.google.com/github/talmolab/sleap/blob/main/docs/notebooks/Training_and_inference_on_an_example_dataset.ipynb)
@@ -262,67 +272,74 @@ mv DeepLabCut_Latest_Colab_TrainNetwork_VideoAnalysis.ipynb DeepLabCut_Demo_your
 
     - If the SLEAP notebooks are the only files in the Downloads folder:
 
-```
-mv ~/Downloads/* ~/jupyter_notebooks/sleap
-```
-
-<!-- bullet format -->
+    ```
+    sudo mv ~/Downloads/* /usr/local/jupyter_notebooks/sleap
+    ```
 
     - Otherwise if there are other files in the downloads folder:
 
-```
-cd ~/Downloads
-```
+    ```
+    cd ~/Downloads
+    ```
 
-```
-mv Training_and_inference_using_Google_Drive.ipynb Training_and_inference_on_an_example_dataset.ipynb SLEAP_Post_inference_tracking.ipynb SLEAP_Interactive_and_resumable_training.ipynb SLEAP_Interactive_and_realtime_inference.ipynb SLEAP_Data_structures.ipynb Model_evaluation.ipynb Analysis_examples.ipynb
-```
+    ```
+    sudo mv Training_and_inference_using_Google_Drive.ipynb Training_and_inference_on_an_example_dataset.ipynb SLEAP_Post_inference_tracking.ipynb SLEAP_Interactive_and_resumable_training.ipynb SLEAP_Interactive_and_realtime_inference.ipynb SLEAP_Data_structures.ipynb Model_evaluation.ipynb Analysis_examples.ipynb
+    ```
 
 
 ## Create Desktop shortcuts for SLEAP, DeepLabCut, Jupyter, and nvitop
 
+- First create a directory in `/usr/local` to store all desktop shortcut related files
+
+```
+sudo mkdir -p /usr/local/shortcut-files
+```
+
 ### SLEAP desktop shortcut
 
 1. Download the SLEAP icon from https://sleap.ai/installation.html
-    - Open the side menu on the left and download the image
-    - Save the image as sleapIcon.png
+    1. Open the side menu on the left and download the image
+    2. Save the image as sleapIcon.png
+    3. Move the image file to `/usr/local/shortcut-files` 
+
+    ```
+    sudo mv /home/exouser/Downloads/sleapIcon.png /usr/local/shortcut-files
+    ```
 
 2. Create a launch_sleap.sh file
 
 ```
-vim ~/launch_sleap.sh
+sudo vim /usr/local/shortcut-files/launch_sleap.sh
 ```
 
 3. Paste the following contents in the .sh file
 
 ```
-#!/bin/bash                                                                     
+#!/bin/bash
 {
-source /home/exouser/miniconda3/etc/profile.d/conda.sh
-conda init
-source /home/exouser/.bashrc
+source /etc/bash.bashrc
 conda activate sleap
 } > /dev/null 2>&1
-sleap-label
+/opt/miniconda3/envs/sleap/bin/sleap-label
 ```
 
-- After doing ```vim ~/launch_sleap.sh``` in the terminal, perform the following steps:
+- After doing ```sudo vim /usr/local/shortcut-files/launch_sleap.sh``` in the terminal, perform the following steps:
     1. Copy the contents from the code chunk
-    2. In the file, press ```i``` to enter INSERT mode
+    2. In the file, press `i` to enter INSERT mode
     3. Paste the contents into the file
-    4. Press ```esc```
+    4. Press `esc`
     5. Type ```:wq``` and press ```enter``` to save and exit the file
 
 4. Set the right permissions
 
 ```
-chmod +x ~/launch_sleap.sh
+sudo chmod +x /usr/local/shortcut-files/launch_sleap.sh
 ```
 
-5. Create a .desktop file
+5. Create a .desktop file in `/usr/share/applications`
 
 ```
-vim ~/.local/share/applications/sleap.desktop
+sudo vim /usr/share/applications/sleap.desktop
 ```
 
 6. Paste the following contents in the .desktop file
@@ -333,8 +350,8 @@ Version=1.0
 Type=Application
 Name=SLEAP
 Comment=Launch SLEAP GUI
-Exec=/home/exouser/launch_sleap.sh
-Icon=/home/exouser/Downloads/sleapIcon.png
+Exec=/usr/local/shortcut-files/launch_sleap.sh
+Icon=/usr/local/shortcut-files/sleapIcon.png
 Terminal=true
 Categories=Development;
 ```
@@ -349,7 +366,7 @@ Categories=Development;
 7. Set the right permissions
 
 ```
-chmod +x ~/.local/share/applications/sleap.desktop
+chmod +x /usr/share/applications/sleap.desktop
 ```
 
 8. Open all applications with the "Show Apps" icon in the bottom left hand corner of the Web Desktop
@@ -360,8 +377,13 @@ chmod +x ~/.local/share/applications/sleap.desktop
 ### DeepLabCut desktop shortcut
 
 1. Download the DeepLabCut icon from https://deeplabcut.github.io/DeepLabCut/docs/installation.html
-    - Open the side menu on the left and download the image
-    - Save the image as deeplabcutIcon.png
+    1. Open the side menu on the left and download the image
+    2. Save the image as deeplabcutIcon.png
+    3. Move the image file to `/usr/local/shortcut-files` 
+
+    ```
+    sudo mv /home/exouser/Downloads/deeplabcutIcon.png /usr/local/shortcut-files
+    ```
 
 2. Create a launch_deeplabcut.sh file
 
