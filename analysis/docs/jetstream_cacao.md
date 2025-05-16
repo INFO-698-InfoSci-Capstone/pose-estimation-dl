@@ -22,7 +22,7 @@
 
 3. Update the terraform.tfvars file to include the appropriate information about your project by modifying the following:
 
-![terraform.tfvars file](images/terraform_tfvars.png)
+![terraform.tfvars](images/terraform_tfvars_modifications.png)
 
 - `project`: the name of your project's allocation (e.g. SOT829133)
 - `instance_name`: a descriptive instance name
@@ -30,10 +30,21 @@
 - `image`: the ID of the image you created which you can find [here](https://js2.jetstream-cloud.org/project/images)
 - `flavor`: the default size of the instance that will be created (e.g. m3.medium, g3.large)
 - `keypair`: the name of one of your keypairs found [here](https://js2.jetstream-cloud.org/project/key_pairs)
-- Comment out the `share_name`, `share_access_key`, and `share_mount_path` variables
+- Comment out the `share_name`, `share_access_key`, `share_mount_path`, and `instructors_ssh_keys_base64` variables
 
-. Modify the ui.json file to include the necessary configuration parameters, ensuring that any parameters listed in the ui.json file are also present in the metadata.json file.
+4. Modify the ui.json file to include the necessary configuration parameters, ensuring that any parameters listed in the ui.json file are also present in the metadata.json file.
 
 ![Matching ui.json and metadata.json parameters](images/terraform_ui_metadata_json.png)
 
-. After making the necessary modifications to the ui.json and metadata.json files, open a terminal and set the working directory to the folder containing the Terraform files. 
+5. After making the necessary modifications to the ui.json and metadata.json files, open a terminal and set the working directory to the folder containing the Terraform files. 
+
+6. Authenticate the OpenStack CLI (Log in) by running an `openrc.sh` script
+    - If you don't have an `openrc.sh` script then you can generate one using the instructions found [here](https://docs.jetstream-cloud.org/ui/cli/auth/?h=openrc)
+
+7. Run `terraform init` to initialize Terraform
+
+8. Run `terraform apply` to execute the actions defined in the Terraform files
+
+## Importing the template to CACAO
+
+- After you have modified the Terraform files in your repository accordingly, follow the steps found [here](https://docs.jetstream-cloud.org/ui/cacao/cacao_cli_import_terraform_template/) regarding how to import the template to CACAO using the CACAO CLI
