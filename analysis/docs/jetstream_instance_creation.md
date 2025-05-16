@@ -1,6 +1,6 @@
 # Creating a Jetstream Instance through Exosphere and installing DeepLabCut, SLEAP, and Jupyter 
 
-## Creating a base Jetstream instance
+## Create a base Jetstream instance
 
 1. In your allocation, go to Create and select Instance
 
