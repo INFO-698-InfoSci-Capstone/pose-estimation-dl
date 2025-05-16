@@ -20,8 +20,20 @@
 
 - The ui.json file in this repository was copied from the [cacao-tf-os-ops single-image](https://gitlab.com/cyverse/cacao-tf-os-ops/-/tree/main/single-image?ref_type=heads) repository
 
-3. Modify the ui.json file to include the necessary configuration parameters, ensuring that any parameters listed in the ui.json file are also present in the metadata.json file.
+3. Update the terraform.tfvars file to include the appropriate information about your project by modifying the following:
+
+![terraform.tfvars file](images/terraform_tfvars.png)
+
+- `project`: the name of your project's allocation (e.g. SOT829133)
+- `instance_name`: a descriptive instance name
+- `username`: your ACCESS username (e.g. yourusername@access-ci.org)
+- `image`: the ID of the image you created which you can find [here](https://js2.jetstream-cloud.org/project/images)
+- `flavor`: the default size of the instance that will be created (e.g. m3.medium, g3.large)
+- `keypair`: the name of one of your keypairs found [here](https://js2.jetstream-cloud.org/project/key_pairs)
+- Comment out the `share_name`, `share_access_key`, and `share_mount_path` variables
+
+. Modify the ui.json file to include the necessary configuration parameters, ensuring that any parameters listed in the ui.json file are also present in the metadata.json file.
 
 ![Matching ui.json and metadata.json parameters](images/terraform_ui_metadata_json.png)
 
-4. After making the necessary modifications to the ui.json and metadata.json files, open a terminal and set the working directory to the folder containing the Terraform files. 
+. After making the necessary modifications to the ui.json and metadata.json files, open a terminal and set the working directory to the folder containing the Terraform files. 
